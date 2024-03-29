@@ -1,11 +1,16 @@
-import Message from "./Message"
-// import VolcanoClient from './packages/VolcanoClient';
-// import Volcano from './packages/Volcano';
+import CountryList from "./components/CountryList";
 
-async function App() {
-
-	return <Message	/>
-
+function App() {
+  return (
+    <div className="container-fluid">
+      <div className="row ">
+            <div className="col">
+				<CountryList />
+			</div>
+            <div className="col-9">One of three columns</div>
+        </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
