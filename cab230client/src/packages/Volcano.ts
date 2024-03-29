@@ -92,3 +92,5 @@ class Volcano {
         this.PopulationWithin100km = PopulationWithin100km;
     }
 }
+
+export default Volcano;

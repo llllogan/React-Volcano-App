@@ -1,6 +1,8 @@
 import Message from "./Message"
+// import VolcanoClient from './packages/VolcanoClient';
+// import Volcano from './packages/Volcano';
 
-function App() {
+async function App() {
 
 	return <Message	/>
 
