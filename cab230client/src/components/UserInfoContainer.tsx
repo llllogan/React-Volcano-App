@@ -1,12 +1,13 @@
 import UserImage from "./UserImage";
+import UserInfoInput from "./UserInfoInput";
+import "../App.css";
 
-function UserInfoContainer() {
-  
+export default function UserInfoContainer() {
   return (
-    <div className="d-flex justify-content-center pt-4">
-        <UserImage loggedIn={false} />
+    <div className="mb-2 z-3 bg-light" id="userInfo">
+      <UserImage loggedIn={false} />
+      <UserInfoInput />
+      <hr />
     </div>
   );
 }
-
-export default UserInfoContainer;

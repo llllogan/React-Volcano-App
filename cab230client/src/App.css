@@ -1,0 +1,15 @@
+.App {
+    /* Other styles */
+    height: 100dvh; /* Fill the height of the container */
+    overflow-y: hidden; /* Add vertical scroll if content exceeds the height */
+  }
+
+#leftPanel {
+    height: 100dvh;
+    overflow: auto;
+}
+
+#userInfo {
+    position: sticky;
+    top: 0;
+}
