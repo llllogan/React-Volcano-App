@@ -6,21 +6,21 @@ class VolcanoApiClient {
     private baseUrl: string = "http://4.237.58.241:3000";
 
     // Function to get a list of Countries from the API
-    public async getCountries(): Promise<string[]> {
+    public async getCountries() {
         const response = await fetch(`${this.baseUrl}/countries`);
-        const data = await response.json();
+        const data = await response.json() as string[];
         return data;
     }
     
     // Function to get a list of all volcanoes
-    public async getVolcanoes(): Promise<Volcano[]> {
+    public async getVolcanoes() {
         const response = await fetch(`${this.baseUrl}/volcanoes`);
-        const data = await response.json();
+        const data = await response.json() as Volcano[];
         return data;
     }
 
     // Function to get a single volcano by its ID
-    public async getVolcanoById(id: number, token?: string): Promise<Volcano> {
+    public async getVolcanoById(id: number, token?: string) {
 
         let returnedData: Volcano;
         // If a token is provided, add it to the request headers
@@ -31,10 +31,10 @@ class VolcanoApiClient {
                     'Authentication': `Bearer ${token}`
                 }
             });
-            returnedData = await response.json();
+            returnedData = await response.json() as Volcano;
         } else {
             const response = await fetch(`${this.baseUrl}/volcano/${id}`);
-            returnedData = await response.json();
+            returnedData = await response.json() as Volcano;
         }
 
         return returnedData;
@@ -67,4 +67,6 @@ class VolcanoApiClient {
 
 }
 
-export default VolcanoApiClient;
+const volcanoClient = new VolcanoApiClient();
+
+export default volcanoClient;
