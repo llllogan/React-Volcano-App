@@ -6,8 +6,16 @@ function filterCountries(searchTerm: string, countries: string[]) {
   const filterCountries: string[] = [];
 
   countries.filter((country) => {
-    if (country.toLowerCase().includes(searchTerm.toLowerCase())) {
+    if (country.toLowerCase().startsWith(searchTerm.toLowerCase())) {
       filterCountries.push(country);
+    }
+  });
+
+  countries.filter((country) => {
+    if (country.toLowerCase().includes(searchTerm.toLowerCase())) {
+      if (!filterCountries.includes(country)) {
+        filterCountries.push(country);
+      }
     }
   });
 
