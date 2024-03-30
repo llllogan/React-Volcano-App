@@ -16,7 +16,7 @@ export default function CountryList(props: Props) {
     <>
       <ul className="list-group">
         {countries.map((name, index) => (
-          <CountryListElement key={index} name={name} code="AU" />
+          <CountryListElement key={index} name={name} />
         ))}
       </ul>
     </>
