@@ -5,6 +5,22 @@ class VolcanoApiClient {
     // Base URL for the API
     private baseUrl: string = "http://4.237.58.241:3000";
 
+    private bearerToken: string = "";
+
+    private username: string = "";
+
+    private password: string = "";
+
+    private loggedIn: boolean = false;
+
+    public getUserInfo() {
+        return {
+            username: this.username,
+            password: this.password,
+            loggedIn: this.loggedIn
+        };
+    }
+
     // Function to get a list of Countries from the API
     public async getCountries() {
         const response = await fetch(`${this.baseUrl}/countries`);
@@ -20,15 +36,15 @@ class VolcanoApiClient {
     }
 
     // Function to get a single volcano by its ID
-    public async getVolcanoById(id: number, token?: string) {
+    public async getVolcanoById(id: number) {
 
         let returnedData: Volcano;
         // If a token is provided, add it to the request headers
-        if (token) {
+        if (this.bearerToken !== "") {
             const response = await fetch(`${this.baseUrl}/volcano/${id}`, {
                 method: 'GET',
                 headers: {
-                    'Authentication': `Bearer ${token}`
+                    'Authentication': `Bearer ${this.bearerToken}`
                 }
             });
             returnedData = await response.json() as Volcano;
@@ -40,8 +56,29 @@ class VolcanoApiClient {
         return returnedData;
     }
 
+
+    public async getToken(username: string, password: string) {
+
+        // Check if the user is already logged in
+        if (this.bearerToken !== "") {
+            return this.bearerToken;
+        }
+
+        const signUpSuccess = await this.signUp(username, password);
+        console.log("User created: ", signUpSuccess);
+
+        this.bearerToken = await this.logIn(username, password);
+
+        this.username = username;
+        this.password = password;
+        this.loggedIn = true;
+
+    }
+
+
+
     // Function to create a user account
-    public async createUser(username: string, password: string): Promise<boolean> {
+    private async signUp(username: string, password: string) {
         const response = await fetch(`${this.baseUrl}/user/register`, {
             method: 'POST',
             headers: {
@@ -53,7 +90,7 @@ class VolcanoApiClient {
     }
 
     // Function to get bearer token for a user
-    public async getToken(username: string, password: string): Promise<string> {
+    private async logIn(username: string, password: string) {
         const response = await fetch(`${this.baseUrl}/user/login`, {
             method: 'POST',
             headers: {
