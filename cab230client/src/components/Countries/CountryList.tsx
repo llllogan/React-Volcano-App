@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CountryListElement from "./CountryListElement";
-import '../App.css';
+import "../../App";
 
 interface Props {
   countries: string[];

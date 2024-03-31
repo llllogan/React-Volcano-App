@@ -1,6 +1,6 @@
 import "./App.css";
-import CountriesPanel from "./components/CountriesPanel";
-import UserInfoContainer from "./components/UserInfoContainer";
+import CountriesPanel from "./components/Countries/CountriesPanel";
+import UserInfoContainer from "./components/UserPanel/UserInfoContainer";
 
 function App() {
   return (

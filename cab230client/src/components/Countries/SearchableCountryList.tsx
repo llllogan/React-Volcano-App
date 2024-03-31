@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CountryList from "./CountryList";
-import '../App.css';
+import "../../App";
 
 function filterCountries(searchTerm: string, countries: string[]) {
   

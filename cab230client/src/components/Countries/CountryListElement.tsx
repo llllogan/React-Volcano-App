@@ -1,4 +1,4 @@
-import CountryToIsoCode from "../packages/ISOCountryName";
+import CountryToIsoCode from "../../packages/ISOCountryName";
 
 interface Props {
     name: string;

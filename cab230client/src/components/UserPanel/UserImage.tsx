@@ -1,5 +1,5 @@
-import LoggedOutUser from "./icons/LoggedOutUser";
-import LoggedInUser from "./icons/LoggedInUser";
+import LoggedOutUser from "../icons/LoggedOutUser";
+import LoggedInUser from "../icons/LoggedInUser";
 
 interface Props {
   loggedIn: boolean;

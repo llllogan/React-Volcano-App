@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import volcanoClient from "../packages/VolcanoClient";
+import volcanoClient from "../../packages/VolcanoClient";
 import SearchableCountryList from "./SearchableCountryList";
-import '../App.css';
+import '../../App.css';
 
 export default function CountriesPanel() {
   const [countries, setCountries] = useState<string[]>([]);

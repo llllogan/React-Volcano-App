@@ -1,6 +1,6 @@
 import UserImage from "./UserImage";
 import UserInfoInput from "./UserInfoInput";
-import "../App.css";
+import "../../App";
 
 export default function UserInfoContainer() {
   return (
