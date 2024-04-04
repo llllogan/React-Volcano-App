@@ -1,11 +1,8 @@
 import volcanoClient from "../../packages/VolcanoClient";
 import { useState } from "react";
 
-interface Props {
-  onLogIn: () => void;
-}
 
-export default function UserInfoInput(props: Props) {
+export default function UserInfoInput() {
 
   const [input, setInput] = useState({
     username: "",
@@ -17,7 +14,6 @@ export default function UserInfoInput(props: Props) {
     if (input.username !== "" && input.password !== "") {
       const bearerToken = volcanoClient.getToken(input.username, input.password);
       console.log("Bearer token: ", bearerToken);
-      props.onLogIn();
       return;
     }
     alert("please provide a valid input");

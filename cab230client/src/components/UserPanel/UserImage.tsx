@@ -1,17 +1,16 @@
 import LoggedOutUser from "../Icons/LoggedOutUser";
 import LoggedInUser from "../Icons/LoggedInUser";
+import { GetUserContext } from "../Context";
 
-interface Props {
-  loggedIn: boolean;
-}
 
-export default function UserImage(props: Props) {
+export default function UserImage() {
   const size = 100;
+  const user = GetUserContext();
 
   return (
 
     <div className="d-flex justify-content-center py-5">
-      {props.loggedIn ? <LoggedInUser size={size} /> : <LoggedOutUser size={size} /> }
+      {user.isLoggedIn ? <LoggedInUser size={size} /> : <LoggedOutUser size={size} /> }
     </div>
 
   );
