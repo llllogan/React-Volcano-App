@@ -59,11 +59,6 @@ class VolcanoApiClient {
 
     public async getToken(username: string, password: string) {
 
-        // Check if the user is already logged in
-        if (this.bearerToken !== "") {
-            return this.bearerToken;
-        }
-
         const signUpSuccess = await this.signUp(username, password);
         console.log("User created: ", signUpSuccess);
 

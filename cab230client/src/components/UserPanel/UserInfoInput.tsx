@@ -12,9 +12,7 @@ export default function UserInfoInput() {
   const handleSubmitEvent = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (input.username !== "" && input.password !== "") {
-      const bearerToken = volcanoClient.getToken(input.username, input.password);
-      console.log("Bearer token: ", bearerToken);
-      return;
+      volcanoClient.getToken(input.username, input.password);
     }
     alert("please provide a valid input");
   };
