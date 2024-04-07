@@ -1,16 +1,19 @@
 import LoggedOutUser from "../Icons/LoggedOutUser";
 import LoggedInUser from "../Icons/LoggedInUser";
-import { GetUserContext } from "../Context";
+import { useContext } from "react";
+import { UserContext, UserContextType } from "../Context";
 
 
 export default function UserImage() {
   const size = 100;
-  const user = GetUserContext();
+  const {
+    currentUser
+  } = useContext(UserContext) as UserContextType;
 
   return (
 
     <div className="d-flex justify-content-center py-5">
-      {user.isLoggedIn ? <LoggedInUser size={size} /> : <LoggedOutUser size={size} /> }
+      {currentUser.isLoggedIn ? <LoggedInUser size={size} /> : <LoggedOutUser size={size} /> }
     </div>
 
   );

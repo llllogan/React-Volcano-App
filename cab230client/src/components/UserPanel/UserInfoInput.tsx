@@ -1,5 +1,6 @@
 import volcanoClient from "../../packages/VolcanoClient";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext, UserContextType } from "../Context";
 
 
 export default function UserInfoInput() {
@@ -9,12 +10,24 @@ export default function UserInfoInput() {
     password: "",
   });
 
+  const {
+    currentUser,
+    setCurrentUser
+  } = useContext(UserContext) as UserContextType;
+
+
   const handleSubmitEvent = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (input.username !== "" && input.password !== "") {
+    if (input.username !== "" && input.password !== "" && !currentUser.isLoggedIn) {
       volcanoClient.getToken(input.username, input.password);
+      setCurrentUser({
+        name: input.username,
+        email: input.username,
+        isLoggedIn: true,
+      });
+    } else {
+      alert("please provide a valid input");
     }
-    alert("please provide a valid input");
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {

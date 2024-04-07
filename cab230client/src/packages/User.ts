@@ -1,9 +1,5 @@
-export interface User {
-
-    name: string
-    email: string
-    isLoggedIn: boolean;
-  
-  }
-
-export default User;
+export default interface User {
+  name: string;
+  email: string;
+  isLoggedIn: boolean;
+}
