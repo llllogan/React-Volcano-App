@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import volcanoClient from "../../packages/VolcanoClient";
+import volcanoClient from "../../../packages/VolcanoClient";
 import SearchableCountryList from "./SearchableCountryList";
-import '../../App.css';
 
 export default function CountriesPanel() {
   const [countries, setCountries] = useState<string[]>([]);
@@ -15,9 +14,8 @@ export default function CountriesPanel() {
     fetchCountries();
   }, []);
 
-  
   return (
-    <div className="mt-4" id="countryList">
+    <div className="mt-4">
       <h1>Countries</h1>
       <SearchableCountryList countries={countries} />
     </div>

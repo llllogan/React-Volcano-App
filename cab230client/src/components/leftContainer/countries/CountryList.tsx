@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import CountryListElement from "./CountryListElement";
-import "../../App";
 
 interface Props {
   countries: string[];
@@ -15,7 +14,7 @@ export default function CountryList(props: Props) {
 
   return (
     <>
-      <ul className="list-group overflow-auto" id="countryList">
+      <ul className="list-group overflow-auto">
         {countries.map((name, index) => (
           <CountryListElement key={index} name={name} />
         ))}

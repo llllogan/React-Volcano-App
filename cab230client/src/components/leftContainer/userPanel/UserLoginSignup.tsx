@@ -1,24 +1,24 @@
-import volcanoClient from "../../packages/VolcanoClient";
+import volcanoClient from "../../../packages/VolcanoClient";
 import { useState, useContext } from "react";
-import { UserContext, UserContextType } from "../Context";
+import { UserContext, UserContextType } from "../../../packages/Context";
 
-
-export default function UserInfoInput() {
-
+export default function UserLoginSignup() {
   const [input, setInput] = useState({
     username: "",
     password: "",
   });
 
-  const {
-    currentUser,
-    setCurrentUser
-  } = useContext(UserContext) as UserContextType;
-
+  const { currentUser, setCurrentUser } = useContext(
+    UserContext
+  ) as UserContextType;
 
   const handleSubmitEvent = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (input.username !== "" && input.password !== "" && !currentUser.isLoggedIn) {
+    if (
+      input.username !== "" &&
+      input.password !== "" &&
+      !currentUser.isLoggedIn
+    ) {
       volcanoClient.getToken(input.username, input.password);
       setCurrentUser({
         name: input.username,
@@ -38,7 +38,6 @@ export default function UserInfoInput() {
       [name]: value,
     }));
   };
-
 
   return (
     <form onSubmit={handleSubmitEvent}>

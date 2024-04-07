@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import CountryList from "./CountryList";
-import "../../App";
+import "../../../App";
 
 function filterCountries(searchTerm: string, countries: string[]) {
-  
   const filterCountries: string[] = [];
 
   countries.filter((country) => {
@@ -21,7 +20,6 @@ function filterCountries(searchTerm: string, countries: string[]) {
   });
 
   return filterCountries;
-
 }
 
 interface Props {
@@ -44,12 +42,14 @@ export default function SearchableCountryList(props: Props) {
         id="countrySearchTerm"
         onChange={(e) => {
           const searchTerm = e.target.value;
-          const filteredCountries = filterCountries(searchTerm, props.countries);
+          const filteredCountries = filterCountries(
+            searchTerm,
+            props.countries
+          );
           setCountries(filteredCountries);
         }}
-          
       />
-      <CountryList countries={countries}/>
+      <CountryList countries={countries} />
     </>
   );
 }

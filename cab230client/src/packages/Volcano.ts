@@ -2,7 +2,7 @@ import { Expose } from 'class-transformer';
 import { IsString, IsNumber } from 'class-validator';
 
 
-class Volcano {
+export default class Volcano {
 
     @Expose({ name: 'id' })
     @IsNumber()
@@ -61,5 +61,3 @@ class Volcano {
     PopulationWithin100km: number | undefined;
 
 }
-
-export default Volcano;
