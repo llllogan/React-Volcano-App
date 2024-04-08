@@ -2,6 +2,9 @@ import { useContext } from "react";
 import { CountryContext, CountryContextType } from "../../packages/Context";
 import { AgGridReact } from "ag-grid-react";
 
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+
 
 export default function VolcanoList() {
 
@@ -20,7 +23,7 @@ export default function VolcanoList() {
 
     if (selectedCountry) {
         return (
-            <div>
+            <div className="ag-theme-alpine" style={{height: 500}}>
                 <h1>{selectedCountry.name}</h1>
                 <AgGridReact 
                     rowData={rowData}
