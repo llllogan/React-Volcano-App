@@ -1,25 +1,35 @@
-import { useContext } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { CountryContext, CountryContextType } from "../../packages/Context";
 import { AgGridReact } from "ag-grid-react";
 
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import { CellClickedEvent, ColDef } from "ag-grid-community";
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 
 export default function VolcanoList() {
 
     const { selectedCountry } = useContext(CountryContext) as CountryContextType;
 
-    const rowData = [
+    const [rowData] = useState([
         {make: 'Toyota', model: 'Celica', price: 35000},
         {make: 'Ford', model: 'Mondeo', price: 32000},
         {make: 'Porsche', model: 'Boxster', price: 72000}
-    ];
-    const columnDefs = [
+    ]);
+    const [columnDefs] = useState<ColDef[]>([
         {field: 'make'},
         {field: 'model'},
         {field: 'price'}
-    ];
+    ]);
+
+    const defaultColDef = useMemo(() => ({
+        sortable: true,
+        filter: true,
+    }), []);
+
+    const cellClickListener = useCallback( (e:CellClickedEvent) => {
+        console.log(e);
+    }, []);
 
     if (selectedCountry) {
         return (
@@ -27,7 +37,10 @@ export default function VolcanoList() {
                 <h1>{selectedCountry.name}</h1>
                 <AgGridReact 
                     rowData={rowData}
-                    columnDefs={columnDefs}/>
+                    columnDefs={columnDefs}
+                    defaultColDef={defaultColDef}
+                    animateRows={true}
+                    onCellClicked={cellClickListener}/>
             </div>
         );
     } else {
