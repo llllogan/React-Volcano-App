@@ -1,7 +1,7 @@
 import "./App.css";
 import CountriesPanel from "./components/leftContainer/countries/CountriesPanel";
 import UserInfoContainer from "./components/leftContainer/userPanel/UserContainer";
-import RightPanelContainer from "./components/rightContainer/volcanoGrid/RightPanelContainer";
+import RightPanelContainer from "./components/rightContainer/RightPanelContainer";
 import { User, Country } from "./packages/Interfaces";
 import { UserContext, CountryContext } from "./packages/Context";
 import { useState } from "react";

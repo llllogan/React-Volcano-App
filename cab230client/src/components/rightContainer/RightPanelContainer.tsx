@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { CountryContext, CountryContextType } from "../../../packages/Context";
+import { CountryContext, CountryContextType } from "../../packages/Context";
 // import { AgGridReact } from "ag-grid-react";
 
-import CountriesVolcanoesContainer from "./CountriesVolcanoesContainer";
+import CountriesVolcanoesContainer from "./volcanoGrid/CountriesVolcanoesContainer";
 
 // import { CellClickedEvent, ColDef } from "ag-grid-community";
 // import "ag-grid-community/styles/ag-grid.css";
