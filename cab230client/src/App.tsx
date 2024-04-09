@@ -1,7 +1,7 @@
 import "./App.css";
 import CountriesPanel from "./components/leftContainer/countries/CountriesPanel";
 import UserInfoContainer from "./components/leftContainer/userPanel/UserContainer";
-import VolcanoList from "./components/rightContainer/VolcanoList";
+import RightPanelContainer from "./components/rightContainer/volcanoGrid/RightPanelContainer";
 import { User, Country } from "./packages/Interfaces";
 import { UserContext, CountryContext } from "./packages/Context";
 import { useState } from "react";
@@ -19,14 +19,16 @@ export default function App() {
   return (
     <div className="container-fluid App" id="app-container">
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
-        <CountryContext.Provider value={{ selectedCountry, setSelectedCountry }}>
+        <CountryContext.Provider
+          value={{ selectedCountry, setSelectedCountry }}
+        >
           <div className="row">
             <div className="col" id="leftPanel">
               <UserInfoContainer />
               <CountriesPanel />
             </div>
             <div className="col-9">
-              <VolcanoList />
+              <RightPanelContainer />
             </div>
           </div>
         </CountryContext.Provider>
