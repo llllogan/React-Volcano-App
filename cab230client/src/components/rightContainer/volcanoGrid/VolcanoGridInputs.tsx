@@ -14,20 +14,20 @@ export default function VolcanoGridInputs() {
 
   return (
     <>
-      <label htmlFor="customRange1" className="form-label">
-        Filter volcanoes which have a population within a radius of {radius}km
-      </label>
+      <label htmlFor="customRange1" className="form-label" />
       <input
         type="range"
         className="form-range"
         min="0"
         max="4"
         id="customRange1"
+        value={0}
         onChange={(e) => {
             const sliderValue = e.target.value;
             setRadius(sliderRadiusMap[sliderValue]);
             console.log(radius);
         }}
+        style={{width: "30%"}}
       />
     </>
   );
