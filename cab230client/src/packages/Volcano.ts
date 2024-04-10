@@ -1,63 +1,49 @@
-import { Expose } from 'class-transformer';
-import { IsString, IsNumber } from 'class-validator';
-
-
 export default class Volcano {
+  Name: string;
+  Country: string;
+  Region: string;
+  Subregion: string;
+  Id?: number;
+  LastEruption?: string;
+  Summit?: number;
+  Elevation?: number;
+  Latitude?: number;
+  Longitude?: number;
+  PopulationWithin5km?: number;
+  PopulationWithin10km?: number;
+  PopulationWithin30km?: number;
+  PopulationWithin100km?: number;
 
-    @Expose({ name: 'id' })
-    @IsNumber()
-    Id!: number;
-
-    @Expose({ name: 'name' })
-    @IsString()
-    Name!: string;
-
-    @Expose({ name: 'country' })
-    @IsString()
-    Country!: string;
-
-    @Expose({ name: 'region' })
-    @IsString()
-    Region!: string;
-
-    @Expose({ name: 'subregion' })
-    @IsString()
-    Subregion!: string;
-
-    @Expose({ name: 'last_eruption' })
-    @IsString()
-    LastEruption!: string;
-
-    @Expose({ name: 'summit' })
-    @IsNumber()
-    Summit!: number;
-
-    @Expose({ name: 'elevation' })
-    @IsNumber()
-    Elevation!: number;
-
-    @Expose({ name: 'latitude' })
-    @IsNumber()
-    Latitude!: number;
-
-    @Expose({ name: 'longitude' })
-    @IsNumber()
-    Longitude!: number;
-
-    @Expose({ name: 'population_5km' })
-    @IsNumber()
-    PopulationWithin5km: number | undefined;
-
-    @Expose({ name: 'population_10km' })
-    @IsNumber()
-    PopulationWithin10km: number | undefined;
-
-    @Expose({ name: 'population_30km' })
-    @IsNumber()
-    PopulationWithin30km: number | undefined;
-
-    @Expose({ name: 'population_100km' })
-    @IsNumber()
-    PopulationWithin100km: number | undefined;
-
+  // Constructor for individual volcano with population data
+  constructor(data: {
+    name: string;
+    country: string;
+    region: string;
+    subregion: string;
+    id?: number;
+    last_eruption?: string;
+    summit?: number;
+    elevation?: number;
+    latitude?: number;
+    longitude?: number;
+    population_5km?: number;
+    population_10km?: number;
+    population_30km?: number;
+    population_100km?: number;
+  }) {
+    this.Name = data.name;
+    this.Country = data.country;
+    this.Region = data.region;
+    this.Subregion = data.subregion;
+    this.Id = data.id;
+    this.LastEruption = data.last_eruption;
+    this.Summit = data.summit;
+    this.Elevation = data.elevation;
+    this.Latitude = data.latitude;
+    this.Longitude = data.longitude;
+    this.PopulationWithin5km = data.population_5km;
+    this.PopulationWithin10km = data.population_10km;
+    this.PopulationWithin30km = data.population_30km;
+    this.PopulationWithin100km = data.population_100km;
+  }
 }

@@ -1,3 +1,4 @@
+import { IVolcano } from './Interfaces';
 import Volcano from './Volcano';
 
 class VolcanoApiClient {
@@ -23,7 +24,7 @@ class VolcanoApiClient {
         };
     }
 
-    public setRadiusFilter(radius: number) {
+    private setRadiusFilter(radius: number) {
 
         // If the radius is 101, set the filter to an empty string
         if (radius === 101) {
@@ -43,16 +44,28 @@ class VolcanoApiClient {
     }
     
     // Function to get a list of all volcanoes
-    public async getVolcanoes(country: string) {
+    public async getVolcanoes(country: string, radius: number) {
 
-        const queryParameterString = `?country=${country}`;
+        this.setRadiusFilter(radius);
+
+        let queryParameterString = `?country=${country}`;
         if (this.radiusFilter !== "") {
-            queryParameterString.concat(`&radius=${this.radiusFilter}`);
+            queryParameterString += `&populatedWithin=${this.radiusFilter}`;
         }
 
         const response = await fetch(`${this.baseUrl}/volcanoes${queryParameterString}`);
-        const data = await response.json() as Volcano[];
-        return data;
+        const data = await response.json() as IVolcano[];
+
+        // Convert the data array to an array of Volcano objects
+        const volcanoes = data.map((volcano) => {
+            return new Volcano(volcano);
+        });
+
+        if (response.status !== 200) {
+            console.log(response);
+        }
+        console.log(volcanoes);
+        return volcanoes;
     }
 
     // Function to get a single volcano by its ID

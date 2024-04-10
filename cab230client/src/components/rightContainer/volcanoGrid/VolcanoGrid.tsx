@@ -1,18 +1,26 @@
 import { CellClickedEvent, ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 import volcanoClient from "../../../packages/VolcanoClient";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import { CountryContext, CountryContextType } from "../../../packages/Context";
 
 export default function VolcanoGrid(props: { radius: number }) {
-  const [rowData] = useState([
-    { make: "Toyota", model: "Celica", price: 35000 },
-    { make: "Ford", model: "Mondeo", price: 32000 },
-    { make: "Porsche", model: "Boxster", price: 72000 },
-  ]);
+  const { selectedCountry } = useContext(CountryContext) as CountryContextType;
+
+  const [rowData, setRowData] = useState<
+    {
+      id: number;
+      name: string;
+      country: string;
+      region: string;
+      subregion: string;
+    }[]
+  >();
+
   const [columnDefs] = useState<ColDef[]>([
     { field: "id" },
     { field: "name" },
@@ -33,8 +41,24 @@ export default function VolcanoGrid(props: { radius: number }) {
     console.log(e);
   }, []);
 
-  console.log(props.radius);
-  console.log(volcanoClient);
+  useEffect(() => {
+    const fetchVolcanoes = async () => {
+      const volcanoes = await volcanoClient.getVolcanoes(selectedCountry.name, props.radius);
+      console.log(volcanoes);
+
+      setRowData(
+        volcanoes.map((volcano) => ({
+          id: volcano.Id,
+          name: volcano.Name,
+          country: volcano.Country,
+          region: volcano.Region,
+          subregion: volcano.Subregion,
+        }))
+      )
+    };
+
+    fetchVolcanoes();
+  }, [selectedCountry.name, props.radius]);
 
   return (
     <div className="ag-theme-alpine" style={{ height: 500 }}>
