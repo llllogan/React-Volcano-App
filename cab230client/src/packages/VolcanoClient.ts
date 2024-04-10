@@ -64,7 +64,6 @@ class VolcanoApiClient {
         if (response.status !== 200) {
             console.log(response);
         }
-        console.log(volcanoes);
         return volcanoes;
     }
 

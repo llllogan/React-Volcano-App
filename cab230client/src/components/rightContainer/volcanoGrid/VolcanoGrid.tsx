@@ -50,7 +50,6 @@ export default function VolcanoGrid(props: { radius: number }) {
   useEffect(() => {
     const fetchVolcanoes = async () => {
       const volcanoes = await volcanoClient.getVolcanoes(selectedCountry.name, props.radius);
-      console.log(volcanoes);
 
       setRowData(
         volcanoes
@@ -69,7 +68,7 @@ export default function VolcanoGrid(props: { radius: number }) {
   }, [selectedCountry.name, props.radius]);
 
   return (
-    <div className="ag-theme-alpine" style={{ height: 500 }}>
+    <div className="ag-theme-alpine" style={{ height: "80vh" }}>
       <AgGridReact
         rowData={rowData}
         columnDefs={columnDefs}
