@@ -71,7 +71,7 @@ class VolcanoApiClient {
     // Function to get a single volcano by its ID
     public async getVolcanoById(id: number) {
 
-        let returnedData: Volcano;
+        let returnedData: IVolcano;
         // If a token is provided, add it to the request headers
         if (this.bearerToken !== "") {
             const response = await fetch(`${this.baseUrl}/volcano/${id}`, {
@@ -80,13 +80,13 @@ class VolcanoApiClient {
                     'Authentication': `Bearer ${this.bearerToken}`
                 }
             });
-            returnedData = await response.json() as Volcano;
+            returnedData = await response.json() as IVolcano;
         } else {
             const response = await fetch(`${this.baseUrl}/volcano/${id}`);
-            returnedData = await response.json() as Volcano;
+            returnedData = await response.json() as IVolcano;
         }
 
-        return returnedData;
+        return new Volcano(returnedData);
     }
 
 

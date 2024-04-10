@@ -13,7 +13,7 @@ export default function VolcanoGrid(props: { radius: number }) {
 
   const [rowData, setRowData] = useState<
     {
-      id: number;
+      id?: number;
       name: string;
       country: string;
       region: string;
@@ -22,17 +22,23 @@ export default function VolcanoGrid(props: { radius: number }) {
   >();
 
   const [columnDefs] = useState<ColDef[]>([
-    { field: "id" },
-    { field: "name" },
-    { field: "country" },
-    { field: "region" },
-    { field: "subregion" },
+    { field: "id",
+  width: 100},
+    { field: "name",
+  flex: 1 },
+    { field: "country",
+  width: 150},
+    { field: "region",
+  suppressSizeToFit: false},
+    { field: "subregion",
+  flex: 1 },
   ]);
 
   const defaultColDef = useMemo(
     () => ({
       sortable: true,
       filter: true,
+      type: "fitGridWidth"
     }),
     []
   );
@@ -47,7 +53,9 @@ export default function VolcanoGrid(props: { radius: number }) {
       console.log(volcanoes);
 
       setRowData(
-        volcanoes.map((volcano) => ({
+        volcanoes
+        .filter((volcano) => volcano.Id !== undefined)
+        .map((volcano) => ({
           id: volcano.Id,
           name: volcano.Name,
           country: volcano.Country,
