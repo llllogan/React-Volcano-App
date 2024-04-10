@@ -1,8 +1,9 @@
 import { useState } from "react";
+import VolcanoGrid from "./VolcanoGrid";
 
 export default function VolcanoGridInputs() {
 
-  const [radius, setRadius] = useState(101);
+  const [slider, setSlider] = useState("4");
 
   const sliderRadiusMap : {[key: string]: number} = {
     "0": 5,
@@ -14,21 +15,27 @@ export default function VolcanoGridInputs() {
 
   return (
     <>
-      <label htmlFor="customRange1" className="form-label" />
+    <div>
+    <label htmlFor="customRange1" className="form-label" >
+        Use the slider to filter volcanoes which have a population within {
+            sliderRadiusMap[slider] === 101 ? " any distance" : ` a ${sliderRadiusMap[slider]} km` 
+        }
+      </label>
       <input
         type="range"
         className="form-range"
         min="0"
         max="4"
         id="customRange1"
-        value={0}
+        value={slider}
         onChange={(e) => {
             const sliderValue = e.target.value;
-            setRadius(sliderRadiusMap[sliderValue]);
-            console.log(radius);
+            setSlider(sliderValue);
+            console.log(sliderRadiusMap[sliderValue]);
         }}
-        style={{width: "30%"}}
       />
+    </div>
+    <VolcanoGrid radius={sliderRadiusMap[slider] as number} />
     </>
   );
 }
