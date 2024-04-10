@@ -13,12 +13,26 @@ class VolcanoApiClient {
 
     private loggedIn: boolean = false;
 
+    private radiusFilter: string = "";
+
     public getUserInfo() {
         return {
             username: this.username,
             password: this.password,
             loggedIn: this.loggedIn
         };
+    }
+
+    public setRadiusFilter(radius: number) {
+
+        // If the radius is 101, set the filter to an empty string
+        if (radius === 101) {
+            this.radiusFilter = "";
+            return;
+        }
+
+        const radiusAsString = radius.toString();
+        this.radiusFilter = `${radiusAsString}km`
     }
 
     // Function to get a list of Countries from the API
@@ -29,8 +43,14 @@ class VolcanoApiClient {
     }
     
     // Function to get a list of all volcanoes
-    public async getVolcanoes() {
-        const response = await fetch(`${this.baseUrl}/volcanoes`);
+    public async getVolcanoes(country: string) {
+
+        const queryParameterString = `?country=${country}`;
+        if (this.radiusFilter !== "") {
+            queryParameterString.concat(`&radius=${this.radiusFilter}`);
+        }
+
+        const response = await fetch(`${this.baseUrl}/volcanoes${queryParameterString}`);
         const data = await response.json() as Volcano[];
         return data;
     }

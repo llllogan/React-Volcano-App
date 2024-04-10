@@ -1,5 +1,6 @@
 import { useState } from "react";
 import VolcanoGrid from "./VolcanoGrid";
+import volcanoClient from "../../../packages/VolcanoClient";
 
 export default function VolcanoGridInputs() {
 
@@ -31,7 +32,7 @@ export default function VolcanoGridInputs() {
         onChange={(e) => {
             const sliderValue = e.target.value;
             setSlider(sliderValue);
-            console.log(sliderRadiusMap[sliderValue]);
+            volcanoClient.setRadiusFilter(sliderRadiusMap[sliderValue]);
         }}
       />
     </div>

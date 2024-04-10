@@ -2,6 +2,8 @@ import { CellClickedEvent, ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useCallback, useMemo, useState } from "react";
 
+import volcanoClient from "../../../packages/VolcanoClient";
+
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
@@ -32,6 +34,7 @@ export default function VolcanoGrid(props: { radius: number }) {
   }, []);
 
   console.log(props.radius);
+  console.log(volcanoClient);
 
   return (
     <div className="ag-theme-alpine" style={{ height: 500 }}>
