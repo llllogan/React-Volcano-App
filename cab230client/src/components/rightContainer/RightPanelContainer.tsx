@@ -1,11 +1,16 @@
 import { useContext } from "react";
 import { CountryContext, CountryContextType } from "../../packages/Context";
+import MapTest from "./singleVolcano/MapTest";
 
 import CountriesVolcanoesContainer from "./volcanoList/CountriesVolcanoesContainer";
 
 
 export default function RightPanelContainer() {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
+
+  return (
+    <MapTest/>
+  )
 
   if (selectedCountry.name !== undefined) {
     return (
