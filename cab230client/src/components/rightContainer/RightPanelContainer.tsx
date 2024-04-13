@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CountryContext, CountryContextType } from "../../packages/Context";
 
-import CountriesVolcanoesContainer from "./volcanoGrid/CountriesVolcanoesContainer";
+import CountriesVolcanoesContainer from "./volcanoList/CountriesVolcanoesContainer";
 
 
 export default function RightPanelContainer() {
