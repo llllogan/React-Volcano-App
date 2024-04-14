@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { VolcanoContext, VolcanoContextType } from "../../../packages/Context";
+import { CountryContext, CountryContextType, VolcanoContext, VolcanoContextType, VolcanoSelectedContext, VolcanoSelectedContextType } from "../../../packages/Context";
 import Volcano from "../../../packages/Volcano";
 import Map from "./Map";
 import volcanoClient from "../../../packages/VolcanoClient";
 
 export default function SingleViewContainer() {
+  const { selectedCountry } = useContext(CountryContext) as CountryContextType;
+  const { setVolcanoSelected } = useContext(VolcanoSelectedContext) as VolcanoSelectedContextType;
   const { selectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
   const [volcano, setVolcano] = useState<Volcano>(new Volcano(selectedVolcano));
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -25,6 +27,11 @@ export default function SingleViewContainer() {
     <div>
       {mapLoaded ? (<Map volcano={volcano}></Map>) : null}
       <h1>{volcano.Name}</h1>
+      <button className="btn btn-outline-secondary" type="button" onClick={
+        () => {
+          setVolcanoSelected(false);
+        }
+      }>Back to {selectedCountry.name}</button>
     </div>
   );
 }
