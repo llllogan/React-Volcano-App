@@ -18,5 +18,4 @@ export default function RightPanelContainer() {
       </div>
     );
   }
-  // Here you also need to account for single volcano view
 }

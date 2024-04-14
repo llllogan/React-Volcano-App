@@ -22,3 +22,10 @@ export interface VolcanoContextType {
 }
 
 export const VolcanoContext = createContext<VolcanoContextType | null>(null);
+
+export interface VolcanoSelectedType {
+  volcanoSelected: boolean;
+  setVolcanoSelected: Dispatch<SetStateAction<boolean>>;
+}
+
+export const VolcanoSelectedContext = createContext<VolcanoSelectedType | null>(null);
