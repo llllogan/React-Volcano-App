@@ -10,7 +10,7 @@ export default function MapTest() {
     <div>
       <MapContainer
         className="leaflet-container"
-        center={[51.505, -0.09]}
+        center={center}
         zoom={8}
         scrollWheelZoom={false}
         style={{ width: "100%", height: "600px" }}
