@@ -24,8 +24,8 @@ export default function VolcanoGrid(props: { radius: number }) {
   const [columnDefs] = useState<ColDef[]>([
     { field: "id", width: 100, hide: true},
     { field: "name", flex: 1 },
-    { field: "country", width: 150 },
-    { field: "region", suppressSizeToFit: false },
+    { field: "country", hide: true },
+    { field: "region", flex: 1 },
     { field: "subregion", flex: 1 },
   ]);
 
