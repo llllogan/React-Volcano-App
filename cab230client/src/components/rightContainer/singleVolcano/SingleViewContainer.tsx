@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { VolcanoContext, VolcanoContextType } from "../../../packages/Context";
 import Volcano from "../../../packages/Volcano";
+import Map from "./Map";
 
 export default function SingleViewContainer() {
   const { selectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
@@ -8,7 +9,7 @@ export default function SingleViewContainer() {
 
   return (
     <div>
-      <h1>Single View Container</h1>
+        <Map volcano={volcano}></Map>
       <h1>{volcano.Name}</h1>
     </div>
   );
