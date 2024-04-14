@@ -1,6 +1,5 @@
-import { Circle, MapContainer, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
+import { Circle, MapContainer, TileLayer, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { LatLngTuple } from "leaflet";
 import Volcano from "../../../packages/Volcano";
 
 interface Props {
@@ -9,13 +8,12 @@ interface Props {
 
 export default function Map(props: Props) {
 
-  const volcano: Volcano = props.volcano;
+  const volcano = props.volcano;
+  const center = volcano.getLatLngTuple();
 
-
-
-
-  const center: LatLngTuple = [51.505, -0.09];
   const fillBlueOptions = { fillColor: "blue" };
+
+  console.log("I have loaded");
 
   return (
     <div>

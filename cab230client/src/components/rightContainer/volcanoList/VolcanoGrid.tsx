@@ -41,7 +41,6 @@ export default function VolcanoGrid(props: { radius: number }) {
   );
 
   const cellClickListener = useCallback((e: CellClickedEvent) => {
-    console.log(e);
     let volcanoDataFromGrid: IVolcano = e.data;
     setSelectedVolcano(volcanoDataFromGrid);
     setVolcanoSelected(true);

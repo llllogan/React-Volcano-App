@@ -1,4 +1,5 @@
 import CountryToIsoCode from "./ISOCountryName";
+import { LatLngTuple } from "leaflet";
 
 export default class Volcano {
   Name: string;
@@ -50,5 +51,23 @@ export default class Volcano {
     this.PopulationWithin100km = data.population_100km;
 
     this.Code = CountryToIsoCode(this.Country);
+  }
+
+  // Get the volcano's id
+  public getId() {
+
+    if (this.Id === undefined) {
+      throw new Error("Volcano ID is undefined");
+    }
+
+    return this.Id;
+  }
+
+  public getLatLngTuple(): LatLngTuple {
+    if (this.Latitude === undefined || this.Longitude === undefined) {
+      return [0, 0];
+    }
+
+    return [this.Latitude, this.Longitude];
   }
 }

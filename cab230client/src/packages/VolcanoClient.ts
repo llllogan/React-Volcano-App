@@ -59,6 +59,7 @@ class VolcanoApiClient {
         // Convert the data array to an array of Volcano objects
         const volcanoes = data.map((volcano) => {
             return new Volcano(volcano);
+            console.log("I have gotten this from the api", volcano);
         });
 
         if (response.status !== 200) {
