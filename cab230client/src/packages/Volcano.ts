@@ -1,3 +1,5 @@
+import CountryToIsoCode from "./ISOCountryName";
+
 export default class Volcano {
   Name: string;
   Country: string;
@@ -13,6 +15,7 @@ export default class Volcano {
   PopulationWithin10km?: number;
   PopulationWithin30km?: number;
   PopulationWithin100km?: number;
+  Code?: string;
 
   // Constructor for individual volcano with population data
   constructor(data: {
@@ -45,5 +48,7 @@ export default class Volcano {
     this.PopulationWithin10km = data.population_10km;
     this.PopulationWithin30km = data.population_30km;
     this.PopulationWithin100km = data.population_100km;
+
+    this.Code = CountryToIsoCode(this.Country);
   }
 }

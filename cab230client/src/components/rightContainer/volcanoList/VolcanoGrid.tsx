@@ -2,14 +2,16 @@ import { CellClickedEvent, ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 
-import volcanoClient from "../../../packages/VolcanoClient";
-
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { CountryContext, CountryContextType } from "../../../packages/Context";
+import { CountryContext, CountryContextType, VolcanoSelectedContext, VolcanoSelectedContextType, VolcanoContext, VolcanoContextType } from "../../../packages/Context";
+import { IVolcano } from "../../../packages/Interfaces";
+import volcanoClient from "../../../packages/VolcanoClient";
 
 export default function VolcanoGrid(props: { radius: number }) {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
+  const { setVolcanoSelected } = useContext(VolcanoSelectedContext) as VolcanoSelectedContextType;
+  const { setSelectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
 
   const [rowData, setRowData] = useState<
     {
@@ -40,6 +42,9 @@ export default function VolcanoGrid(props: { radius: number }) {
 
   const cellClickListener = useCallback((e: CellClickedEvent) => {
     console.log(e);
+    let volcanoDataFromGrid: IVolcano = e.data;
+    setSelectedVolcano(volcanoDataFromGrid);
+    setVolcanoSelected(true);
   }, []);
 
   useEffect(() => {
