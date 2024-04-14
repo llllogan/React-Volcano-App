@@ -70,4 +70,13 @@ export default class Volcano {
 
     return [this.Latitude, this.Longitude];
   }
+
+  public hasPopulationData(): boolean {
+    return (
+      this.PopulationWithin5km !== undefined ||
+      this.PopulationWithin10km !== undefined ||
+      this.PopulationWithin30km !== undefined ||
+      this.PopulationWithin100km !== undefined
+    );
+  }
 }
