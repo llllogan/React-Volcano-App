@@ -7,9 +7,11 @@ import {
   UserContext,
   CountryContext,
   VolcanoSelectedContext,
-  VolcanoContext
+  VolcanoContext,
+  VolcanoClientContext,
 } from "./packages/Context";
 import { useState } from "react";
+import VolcanoApiClient from "./packages/VolcanoClient";
 
 export default function App() {
   const loggedOutUser: User = {
@@ -22,32 +24,37 @@ export default function App() {
   const [selectedCountry, setSelectedCountry] = useState({} as Country);
   const [selectedVolcano, setSelectedVolcano] = useState({} as IVolcano);
   const [volcanoSelected, setVolcanoSelected] = useState(false);
+  const [volcanoClient, setVolcanoClient] = useState(new VolcanoApiClient({}));
 
   return (
     <div className="container-fluid App" id="app-container">
-      <UserContext.Provider 
-        value={{ currentUser, setCurrentUser }}
+      <VolcanoClientContext.Provider
+        value={{ volcanoClient, setVolcanoClient }}
       >
-        <CountryContext.Provider
-          value={{ selectedCountry, setSelectedCountry }}
-        >
-          <VolcanoSelectedContext.Provider
-            value={{ volcanoSelected, setVolcanoSelected }}
+        <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+          <CountryContext.Provider
+            value={{ selectedCountry, setSelectedCountry }}
           >
-            <VolcanoContext.Provider value={{ selectedVolcano, setSelectedVolcano }}>
-            <div className="row">
-              <div className="col" id="leftPanel">
-                <UserInfoContainer />
-                <CountriesPanel />
-              </div>
-              <div className="col-9">
-                <RightPanelContainer />
-              </div>
-            </div>
-            </VolcanoContext.Provider>
-          </VolcanoSelectedContext.Provider>
-        </CountryContext.Provider>
-      </UserContext.Provider>
+            <VolcanoSelectedContext.Provider
+              value={{ volcanoSelected, setVolcanoSelected }}
+            >
+              <VolcanoContext.Provider
+                value={{ selectedVolcano, setSelectedVolcano }}
+              >
+                <div className="row">
+                  <div className="col" id="leftPanel">
+                    <UserInfoContainer />
+                    <CountriesPanel />
+                  </div>
+                  <div className="col-9">
+                    <RightPanelContainer />
+                  </div>
+                </div>
+              </VolcanoContext.Provider>
+            </VolcanoSelectedContext.Provider>
+          </CountryContext.Provider>
+        </UserContext.Provider>
+      </VolcanoClientContext.Provider>
     </div>
   );
 }

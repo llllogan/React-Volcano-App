@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import volcanoClient from "../../../packages/VolcanoClient";
+import { useContext, useEffect, useState } from "react";
 import SearchableCountryList from "./SearchableCountryList";
+import { VolcanoClientContext, VolcanoClientContextType } from "../../../packages/Context";
 
 export default function CountriesPanel() {
   const [countries, setCountries] = useState<string[]>([]);
+
+  const { volcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -12,7 +14,7 @@ export default function CountriesPanel() {
     };
 
     fetchCountries();
-  }, []);
+  }, [volcanoClient]);
 
   return (
     <div className="mt-4">

@@ -4,14 +4,14 @@ import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { CountryContext, CountryContextType, VolcanoSelectedContext, VolcanoSelectedContextType, VolcanoContext, VolcanoContextType } from "../../../packages/Context";
+import { CountryContext, CountryContextType, VolcanoSelectedContext, VolcanoSelectedContextType, VolcanoContext, VolcanoContextType, VolcanoClientContextType, VolcanoClientContext } from "../../../packages/Context";
 import { IVolcano } from "../../../packages/Interfaces";
-import volcanoClient from "../../../packages/VolcanoClient";
 
 export default function VolcanoGrid(props: { radius: number }) {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
   const { setVolcanoSelected } = useContext(VolcanoSelectedContext) as VolcanoSelectedContextType;
   const { setSelectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
+  const { volcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
 
   const [rowData, setRowData] = useState<
     {
@@ -41,10 +41,10 @@ export default function VolcanoGrid(props: { radius: number }) {
   );
 
   const cellClickListener = useCallback((e: CellClickedEvent) => {
-    let volcanoDataFromGrid: IVolcano = e.data;
+    const volcanoDataFromGrid: IVolcano = e.data;
     setSelectedVolcano(volcanoDataFromGrid);
     setVolcanoSelected(true);
-  }, []);
+  }, [setSelectedVolcano, setVolcanoSelected]);
 
   useEffect(() => {
     const fetchVolcanoes = async () => {
@@ -67,7 +67,7 @@ export default function VolcanoGrid(props: { radius: number }) {
     };
 
     fetchVolcanoes();
-  }, [selectedCountry.name, props.radius]);
+  }, [selectedCountry.name, props.radius, volcanoClient]);
 
   return (
     <div className="ag-theme-alpine" style={{ height: "80vh" }}>

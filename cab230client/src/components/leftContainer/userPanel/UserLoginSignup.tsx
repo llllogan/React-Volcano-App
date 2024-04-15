@@ -1,6 +1,6 @@
-import volcanoClient from "../../../packages/VolcanoClient";
 import { useState, useContext } from "react";
-import { UserContext, UserContextType } from "../../../packages/Context";
+import { UserContext, UserContextType, VolcanoClientContext, VolcanoClientContextType } from "../../../packages/Context";
+import VolcanoApiClient from "../../../packages/VolcanoClient";
 
 export default function UserLoginSignup() {
   const [input, setInput] = useState({
@@ -8,23 +8,23 @@ export default function UserLoginSignup() {
     password: "",
   });
 
-  const { currentUser, setCurrentUser } = useContext(
-    UserContext
-  ) as UserContextType;
+  const { currentUser, setCurrentUser } = useContext( UserContext ) as UserContextType;
+  const { volcanoClient, setVolcanoClient } = useContext( VolcanoClientContext ) as VolcanoClientContextType;
 
-  const handleSubmitEvent = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmitEvent = async (e: React.FormEvent<HTMLFormElement>) => { 
+    
     e.preventDefault();
-    if (
-      input.username !== "" &&
-      input.password !== "" &&
-      !currentUser.isLoggedIn
-    ) {
-      volcanoClient.getToken(input.username, input.password);
-      setCurrentUser({
-        name: input.username,
-        email: input.username,
-        isLoggedIn: true,
-      });
+    if (input.username !== "" && input.password !== "" && !currentUser.isLoggedIn ) {
+
+      setCurrentUser({ name: input.username, email: input.username, isLoggedIn: true });
+
+      const token = await volcanoClient.getToken(input.username, input.password);
+
+      console.log(token);
+
+      setVolcanoClient(new VolcanoApiClient({token: token}));
+      
     } else {
       alert("please provide a valid input");
     }

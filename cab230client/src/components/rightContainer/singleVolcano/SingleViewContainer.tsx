@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { CountryContext, CountryContextType, VolcanoContext, VolcanoContextType, VolcanoSelectedContext, VolcanoSelectedContextType } from "../../../packages/Context";
+import { CountryContext, CountryContextType, VolcanoClientContext, VolcanoClientContextType, VolcanoContext, VolcanoContextType, VolcanoSelectedContext, VolcanoSelectedContextType } from "../../../packages/Context";
 import Volcano from "../../../packages/Volcano";
 import Map from "./Map";
-import volcanoClient from "../../../packages/VolcanoClient";
 import InformationContainer from "./InformationContainer";
 
 export default function SingleViewContainer() {
   
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
   const { selectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
+  const { volcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
 
   const { setVolcanoSelected } = useContext(VolcanoSelectedContext) as VolcanoSelectedContextType;
   
@@ -16,6 +16,8 @@ export default function SingleViewContainer() {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
+    console.log("Selected Volcano", selectedVolcano);
+    console.log("Volcano", volcano);
     const getVolcanoFromApi = async () => {
       const volcanoData: Volcano = await volcanoClient.getVolcanoById(
         volcano.getId()
@@ -25,7 +27,7 @@ export default function SingleViewContainer() {
     };
 
     getVolcanoFromApi();
-  }, [volcano]);
+  }, [volcano, volcanoClient]);
 
   return (
     <div>

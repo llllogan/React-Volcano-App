@@ -2,11 +2,11 @@ import CountryToIsoCode from "./ISOCountryName";
 import { LatLngTuple } from "leaflet";
 
 export default class Volcano {
+  Id?: number;
   Name: string;
   Country: string;
   Region: string;
   Subregion: string;
-  Id?: number;
   LastEruption?: string;
   Summit?: number;
   Elevation?: number;
@@ -20,11 +20,11 @@ export default class Volcano {
 
   // Constructor for individual volcano with population data
   constructor(data: {
+    id?: number;
     name: string;
     country: string;
     region: string;
     subregion: string;
-    id?: number;
     last_eruption?: string;
     summit?: number;
     elevation?: number;
@@ -35,11 +35,11 @@ export default class Volcano {
     population_30km?: number;
     population_100km?: number;
   }) {
+    this.Id = data.id;
     this.Name = data.name;
     this.Country = data.country;
     this.Region = data.region;
     this.Subregion = data.subregion;
-    this.Id = data.id;
     this.LastEruption = data.last_eruption;
     this.Summit = data.summit;
     this.Elevation = data.elevation;

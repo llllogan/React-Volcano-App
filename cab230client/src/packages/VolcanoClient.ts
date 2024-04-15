@@ -1,7 +1,7 @@
-import { IVolcano } from './Interfaces';
+import { ILoginResponse, IRegisterResponse, IVolcano, LoginResponse, RegisterResponse } from './Interfaces';
 import Volcano from './Volcano';
 
-class VolcanoApiClient {
+export default class VolcanoApiClient {
 
     // Base URL for the API
     private baseUrl: string = "http://4.237.58.241:3000";
@@ -15,6 +15,15 @@ class VolcanoApiClient {
     private loggedIn: boolean = false;
 
     private radiusFilter: string = "";
+
+    constructor(data: {
+        token?: string;
+    }) {
+        if (data.token !== undefined) {
+            this.bearerToken = data.token;
+            this.loggedIn = true;
+        }
+    }
 
     public getUserInfo() {
         return {
@@ -86,27 +95,51 @@ class VolcanoApiClient {
             returnedData = await response.json() as IVolcano;
         }
 
+        console.log("I have gotten this from the api", returnedData);
+
         return new Volcano(returnedData);
     }
 
 
     public async getToken(username: string, password: string) {
 
-        const signUpSuccess = await this.signUp(username, password);
-        console.log("User created: ", signUpSuccess);
+        const registerResponse = await this.register(username, password);
 
-        this.bearerToken = await this.logIn(username, password);
+        // If there was an error registering the user, return an empty string
+        if (registerResponse.hasError()) {
+            console.log("There was an error registering the user");
+            console.log(registerResponse.message);
+            return "";
+        }
 
-        this.username = username;
-        this.password = password;
-        this.loggedIn = true;
+        // Some logging
+        if (registerResponse.userAlreadyExists()) {
+            console.log("User already exists");
+        } else if (registerResponse.userCreated()) {
+            console.log("User created");
+        }
 
+        const loginResponse = await this.logIn(username, password);
+
+        // If there was an error logging in, return an empty string
+        if (loginResponse.hasError()) {
+            console.log("There was an error logging in");
+            console.log(loginResponse.message);
+            return "";
+        } else if (loginResponse.invalidCredentials()) {
+            console.log("Invalid credentials");
+            return "";
+        }
+
+        const token: string = loginResponse.getToken();
+
+        return token;
     }
 
 
 
     // Function to create a user account
-    private async signUp(username: string, password: string) {
+    private async register(username: string, password: string) {
         const response = await fetch(`${this.baseUrl}/user/register`, {
             method: 'POST',
             headers: {
@@ -114,7 +147,8 @@ class VolcanoApiClient {
             },
             body: JSON.stringify({ email: username, password: password })
         });
-        return response.ok;
+        const responseMessage = await response.json() as IRegisterResponse;
+        return new RegisterResponse(responseMessage);
     }
 
     // Function to get bearer token for a user
@@ -126,12 +160,8 @@ class VolcanoApiClient {
             },
             body: JSON.stringify({ email: username, password: password })
         });
-        const data = await response.json();
-        return data.token;
+        const responseMessage = await response.json() as ILoginResponse;
+        return new LoginResponse(responseMessage);
     }
 
 }
-
-const volcanoClient = new VolcanoApiClient();
-
-export default volcanoClient;

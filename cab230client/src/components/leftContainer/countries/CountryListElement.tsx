@@ -1,6 +1,6 @@
 import CountryToIsoCode from "../../../packages/ISOCountryName";
 import { useContext } from "react";
-import { CountryContext, CountryContextType, VolcanoSelectedContext, VolcanoSelectedType } from "../../../packages/Context";
+import { CountryContext, CountryContextType, VolcanoSelectedContext, VolcanoSelectedContextType } from "../../../packages/Context";
 
 interface Props {
   name: string;
@@ -10,7 +10,7 @@ export default function CountryListElement(props: Props) {
   const isoCountryCode = CountryToIsoCode(props.name);
 
   const { setSelectedCountry } = useContext( CountryContext ) as CountryContextType;
-  const { setVolcanoSelected } = useContext( VolcanoSelectedContext ) as VolcanoSelectedType;
+  const { setVolcanoSelected } = useContext( VolcanoSelectedContext ) as VolcanoSelectedContextType;
 
   return (
     <li
