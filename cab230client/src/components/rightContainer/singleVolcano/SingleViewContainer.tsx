@@ -21,7 +21,7 @@ export default function SingleViewContainer() {
     };
 
     getVolcanoFromApi();
-  }, []);
+  }, [volcano]);
 
   return (
     <div>
