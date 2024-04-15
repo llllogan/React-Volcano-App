@@ -12,7 +12,6 @@ import {
 } from "./packages/Context";
 import { useState } from "react";
 import VolcanoApiClient from "./packages/VolcanoClient";
-import SettingsContainer from "./components/leftContainer/settingsBar/SettingsContainer";
 
 export default function App() {
   const loggedOutUser: User = {
@@ -44,7 +43,7 @@ export default function App() {
               >
                 <div className="row">
                   <div className="col" id="leftPanel">
-                    <SettingsContainer />
+                    
                     <UserInfoContainer />
                     <CountriesPanel />
                   </div>
