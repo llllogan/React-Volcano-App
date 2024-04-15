@@ -14,11 +14,11 @@ export interface Country {
 }
 
 export interface IVolcano {
+  id?: number;
   name: string;
   country: string;
   region: string;
   subregion: string;
-  id?: number;
   last_eruption?: string;
   summit?: number;
   elevation?: number;
@@ -52,7 +52,7 @@ export class RegisterResponse {
   }
 
   public hasError(): boolean {
-    return this.error === true;
+    return this.error === true && this.userAlreadyExists() === false;
   }
 
   public userCreated(): boolean {

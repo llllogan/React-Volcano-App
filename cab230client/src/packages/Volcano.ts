@@ -1,5 +1,6 @@
 import CountryToIsoCode from "./ISOCountryName";
 import { LatLngTuple } from "leaflet";
+import { IVolcano } from "./Interfaces";
 
 export default class Volcano {
   Id?: number;
@@ -19,22 +20,7 @@ export default class Volcano {
   Code?: string;
 
   // Constructor for individual volcano with population data
-  constructor(data: {
-    id?: number;
-    name: string;
-    country: string;
-    region: string;
-    subregion: string;
-    last_eruption?: string;
-    summit?: number;
-    elevation?: number;
-    latitude?: number;
-    longitude?: number;
-    population_5km?: number;
-    population_10km?: number;
-    population_30km?: number;
-    population_100km?: number;
-  }) {
+  constructor(data: IVolcano) {
     this.Id = data.id;
     this.Name = data.name;
     this.Country = data.country;
@@ -56,7 +42,7 @@ export default class Volcano {
   // Get the volcano's id
   public getId() {
 
-    if (this.Id === undefined) {
+    if (this.Id == undefined) {
       throw new Error("Volcano ID is undefined");
     }
 

@@ -24,7 +24,7 @@ export default function VolcanoGrid(props: { radius: number }) {
   >();
 
   const [columnDefs] = useState<ColDef[]>([
-    { field: "id", width: 100, hide: true},
+    { field: "id", hide: true},
     { field: "name", flex: 1 },
     { field: "country", hide: true },
     { field: "region", flex: 1 },
@@ -55,7 +55,6 @@ export default function VolcanoGrid(props: { radius: number }) {
 
       setRowData(
         volcanoes
-          .filter((volcano) => volcano.Id !== undefined)
           .map((volcano) => ({
             id: volcano.Id,
             name: volcano.Name,

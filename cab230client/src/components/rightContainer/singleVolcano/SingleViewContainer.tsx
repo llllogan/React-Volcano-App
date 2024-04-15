@@ -16,18 +16,18 @@ export default function SingleViewContainer() {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
-    console.log("Selected Volcano", selectedVolcano);
-    console.log("Volcano", volcano);
+    
     const getVolcanoFromApi = async () => {
       const volcanoData: Volcano = await volcanoClient.getVolcanoById(
         volcano.getId()
       );
+      volcanoData.Id = volcano.getId();
       setVolcano(volcanoData);
       setMapLoaded(true);
     };
 
     getVolcanoFromApi();
-  }, [volcano, volcanoClient]);
+  }, [volcanoClient]);
 
   return (
     <div>

@@ -21,8 +21,6 @@ export default function UserLoginSignup() {
 
       const token = await volcanoClient.getToken(input.username, input.password);
 
-      console.log(token);
-
       setVolcanoClient(new VolcanoApiClient({token: token}));
       
     } else {
@@ -32,7 +30,6 @@ export default function UserLoginSignup() {
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setInput((prev) => ({
       ...prev,
       [name]: value,

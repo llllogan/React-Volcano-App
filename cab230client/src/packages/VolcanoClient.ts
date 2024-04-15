@@ -86,7 +86,7 @@ export default class VolcanoApiClient {
             const response = await fetch(`${this.baseUrl}/volcano/${id}`, {
                 method: 'GET',
                 headers: {
-                    'Authentication': `Bearer ${this.bearerToken}`
+                    'Authorization': `Bearer ${this.bearerToken}`
                 }
             });
             returnedData = await response.json() as IVolcano;
@@ -94,8 +94,6 @@ export default class VolcanoApiClient {
             const response = await fetch(`${this.baseUrl}/volcano/${id}`);
             returnedData = await response.json() as IVolcano;
         }
-
-        console.log("I have gotten this from the api", returnedData);
 
         return new Volcano(returnedData);
     }
