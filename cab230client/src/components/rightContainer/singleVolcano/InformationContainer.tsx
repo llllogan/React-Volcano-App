@@ -15,8 +15,8 @@ export default function InformationContainer(props: Props) {
                 <InformationBrick title="subregion" information={props.volcano.Subregion} />
             </div>
             <div className="col">
-                <InformationBrick title="summit" information={props.volcano.getSummit()} />
-                <InformationBrick title="elevation" information={props.volcano.getElevation()} />
+                <InformationBrick title="summit" information={props.volcano.getSummit() + "m"} />
+                <InformationBrick title="elevation" information={props.volcano.getElevation() + "m"} />
                 <InformationBrick title="last eruption" information={props.volcano.getLastEruption()} />
             </div>
         </div>
