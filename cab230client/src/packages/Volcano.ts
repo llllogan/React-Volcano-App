@@ -79,4 +79,28 @@ export default class Volcano {
       this.PopulationWithin100km !== undefined
     );
   }
+
+  public getSummit(): string {
+    if (this.Summit === undefined) {
+      return "Unknown";
+    }
+
+    return this.Summit.toString();
+  }
+
+  public getElevation(): string {
+    if (this.Elevation === undefined) {
+      return "Unknown";
+    }
+
+    return this.Elevation.toString();
+  }
+
+  public getLastEruption(): string {
+    if (this.LastEruption === undefined) {
+      return "Unknown";
+    }
+
+    return this.LastEruption;
+  }
 }
