@@ -44,7 +44,7 @@ export default function Map(props: Props) {
         center={center}
         zoom={zoomLevel}
         scrollWheelZoom={true}
-        style={{ width: "100%", height: "200px" }}
+        style={{ width: "100%", height: "500px" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
