@@ -5,6 +5,7 @@ import { LatLngTuple } from "leaflet";
 
 interface overlayProps {
   center: LatLngTuple;
+  population: number[];
 }
 
 function RadiusOverlays(props: overlayProps) {
@@ -12,16 +13,16 @@ function RadiusOverlays(props: overlayProps) {
   return (
     <>
       <Circle center={props.center} pathOptions={fillBlueOptions} radius={100000}>
-        <Tooltip>100km radius circle</Tooltip>
+        <Tooltip>{props.population[3]} people</Tooltip>
       </Circle>
       <Circle center={props.center} pathOptions={fillBlueOptions} radius={30000}>
-        <Tooltip>30km radius circle</Tooltip>
+        <Tooltip>{props.population[2]} people</Tooltip>
       </Circle>
       <Circle center={props.center} pathOptions={fillBlueOptions} radius={10000}>
-        <Tooltip>10km radius circle</Tooltip>
+        <Tooltip>{props.population[1]} people</Tooltip>
       </Circle>
       <Circle center={props.center} pathOptions={fillBlueOptions} radius={5000}>
-        <Tooltip>5km radius circle</Tooltip>
+        <Tooltip>{props.population[0]} people</Tooltip>
       </Circle>
     </>
   );
@@ -37,6 +38,20 @@ export default function Map(props: Props) {
 
   const zoomLevel = volcano.hasPopulationData() ? 8 : 12;
 
+  function getRadiusInformation() {
+
+    if (volcano.hasPopulationData()) {
+      return (
+        RadiusOverlays({
+          center: center,
+          population: volcano.getPopulationData()
+        })
+      );
+    }
+    return null;
+  }
+  
+
   return (
     <div>
       <MapContainer
@@ -50,7 +65,7 @@ export default function Map(props: Props) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {volcano.hasPopulationData() ? RadiusOverlays({center}) : null}
+        {getRadiusInformation()}
         <Marker position={center}></Marker>
       </MapContainer>
     </div>

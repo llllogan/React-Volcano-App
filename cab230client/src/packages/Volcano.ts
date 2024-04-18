@@ -66,6 +66,15 @@ export default class Volcano {
     );
   }
 
+  public getPopulationData(): number[] {
+    return [
+      this.PopulationWithin5km ?? 0,
+      this.PopulationWithin10km ?? 0,
+      this.PopulationWithin30km ?? 0,
+      this.PopulationWithin100km ?? 0,
+    ];
+  }
+
   public getSummit(): string {
     if (this.Summit === undefined) {
       return "Unknown";
