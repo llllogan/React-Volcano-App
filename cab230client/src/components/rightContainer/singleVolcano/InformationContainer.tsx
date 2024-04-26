@@ -1,6 +1,5 @@
 import Volcano from "../../../packages/Volcano";
 import InformationBrick from "./InformationBrick";
-import { BarChart } from '@mui/x-charts/BarChart';
 
 interface Props {
   volcano: Volcano;

@@ -26,6 +26,7 @@ export default function SingleViewContainer() {
   ) as VolcanoSelectedContextType;
 
   const [volcano, setVolcano] = useState<Volcano>(new Volcano(selectedVolcano));
+  const [populationData, setPopulationData] = useState<number[]>([0, 0, 0, 0]);
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
@@ -36,17 +37,11 @@ export default function SingleViewContainer() {
       volcanoData.Id = volcano.getId();
       setVolcano(volcanoData);
       setMapLoaded(true);
+      setPopulationData(volcano.getPopulationData());
     };
 
     getVolcanoFromApi();
   }, [volcanoClient]);
-
-
-  const pop100 = [1000];
-  const pop30 = [400];
-  const pop10 = [200];
-  const pop5 = [100];
-  const label = ['Population Spread'];
 
   return (
     <div>
@@ -78,20 +73,27 @@ export default function SingleViewContainer() {
           </button>
           <InformationContainer volcano={volcano} />
         </div>
-        <div className="col">
-          <BarChart
-            className="col"
-            width={600}
-            height={350}
-            series={[
-              { data: pop100, label: "100km", id: "pop100Id", stack: "total" },
-              { data: pop30, label: "30km", id: "pop30Id", stack: "total" },
-              { data: pop10, label: "10km", id: "pop10Id", stack: "total" },
-              { data: pop5, label: "5km", id: "pop5Id", stack: "total" },
-            ]}
-            xAxis={[{ data: label, scaleType: "band" }]}
-          />
-        </div>
+        {volcano.hasPopulationData() ? (
+          <div className="col">
+            <BarChart
+              className="col"
+              width={600}
+              height={350}
+              series={[
+                {
+                  data: [populationData[0]],
+                  label: "100km",
+                  id: "pop100Id",
+                  stack: "total",
+                },
+                { data: [populationData[1]], label: "30km", id: "pop30Id", stack: "total" },
+                { data: [populationData[2]], label: "10km", id: "pop10Id", stack: "total" },
+                { data: [populationData[3]], label: "5km", id: "pop5Id", stack: "total" },
+              ]}
+              xAxis={[{ data: ["Population Spread"], scaleType: "band" }]}
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );
