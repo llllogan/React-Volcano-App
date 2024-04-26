@@ -4,7 +4,6 @@ import HelloText from "./HelloText";
 import { useContext } from "react";
 import { UserContext, UserContextType } from "../../../packages/Context";
 import "../../../App";
-import SettingsContainer from "../settingsBar/SettingsContainer";
 
 export default function UserInfoContainer() {
   const { currentUser } = useContext(UserContext) as UserContextType;
