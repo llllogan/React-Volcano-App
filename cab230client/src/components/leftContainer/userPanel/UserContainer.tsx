@@ -13,7 +13,6 @@ export default function UserInfoContainer() {
     <div className="mb-2 z-3 bg-light" id="userInfo">
       <UserImage />
       {currentUser.isLoggedIn ? <HelloText /> : <UserLoginSignup />}
-      <SettingsContainer />
       <hr />
     </div>
   );
