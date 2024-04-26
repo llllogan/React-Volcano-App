@@ -46,7 +46,7 @@ export default function InformationContainer(props: Props) {
       </div>
       <BarChart
         className="col"
-        width={500}
+        width={600}
         height={220}
         series={[
           { data: pop100, label: "100km", id: "pop100Id", stack: "total" },

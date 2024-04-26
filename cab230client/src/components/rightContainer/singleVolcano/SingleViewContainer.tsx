@@ -43,30 +43,33 @@ export default function SingleViewContainer() {
   return (
     <div>
       {mapLoaded ? <Map volcano={volcano}></Map> : null}
-      <h1 className="pt-4">{volcano.Name}</h1>
-      <InformationContainer volcano={volcano} />
-      <button
-        className="btn btn-outline-secondary"
-        type="button"
-        onClick={() => {
-          setVolcanoSelected(false);
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="25"
-          height="25"
-          fill="currentColor"
-          className="bi bi-arrow-left"
-          viewBox="0 0 20 17"
+      <div className="d-flew flex-row justify-content-between pt-4">
+        <h1 className="">{volcano.Name}</h1>
+        <button
+          className="btn btn-outline-secondary btn-sm"
+          type="button"
+          onClick={() => {
+            setVolcanoSelected(false);
+          }}
         >
-          <path
-            fillRule="evenodd"
-            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-          />
-        </svg>
-        Back to {selectedCountry.name}
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            fill="currentColor"
+            className="bi bi-arrow-left"
+            viewBox="0 0 20 17"
+          >
+            <path
+              fillRule="evenodd"
+              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+            />
+          </svg>
+          Back to {selectedCountry.name}
+        </button>
+      </div>
+
+      <InformationContainer volcano={volcano} />
     </div>
   );
 }
