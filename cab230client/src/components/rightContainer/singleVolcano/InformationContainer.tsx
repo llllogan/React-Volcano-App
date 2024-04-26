@@ -8,14 +8,6 @@ interface Props {
 
 export default function InformationContainer(props: Props) {
 
-  const pop100 = [1000];
-  const pop30 = [400];
-  const pop10 = [200];
-  const pop5 = [100];
-  const label = ['Population Spread'];
-
-
-
   return (
     <div className="row py-4">
       <div className="col">
@@ -44,18 +36,6 @@ export default function InformationContainer(props: Props) {
           information={props.volcano.getLastEruption()}
         />
       </div>
-      <BarChart
-        className="col"
-        width={600}
-        height={220}
-        series={[
-          { data: pop100, label: "100km", id: "pop100Id", stack: "total" },
-          { data: pop30, label: "30km", id: "pop30Id", stack: "total" },
-          { data: pop10, label: "10km", id: "pop10Id", stack: "total" },
-          { data: pop5, label: "5km", id: "pop5Id", stack: "total" },
-        ]}
-        xAxis={[{ data: label, scaleType: "band" }]}
-      />
     </div>
   );
 }

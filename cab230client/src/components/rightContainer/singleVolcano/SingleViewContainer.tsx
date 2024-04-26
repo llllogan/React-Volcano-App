@@ -12,6 +12,7 @@ import {
 import Volcano from "../../../packages/Volcano";
 import Map from "./Map";
 import InformationContainer from "./InformationContainer";
+import { BarChart } from "@mui/x-charts";
 
 export default function SingleViewContainer() {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
@@ -40,36 +41,58 @@ export default function SingleViewContainer() {
     getVolcanoFromApi();
   }, [volcanoClient]);
 
+
+  const pop100 = [1000];
+  const pop30 = [400];
+  const pop10 = [200];
+  const pop5 = [100];
+  const label = ['Population Spread'];
+
   return (
     <div>
       {mapLoaded ? <Map volcano={volcano}></Map> : null}
-      <div className="d-flew flex-row justify-content-between pt-4">
-        <h1 className="">{volcano.Name}</h1>
-        <button
-          className="btn btn-outline-secondary btn-sm"
-          type="button"
-          onClick={() => {
-            setVolcanoSelected(false);
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="25"
-            fill="currentColor"
-            className="bi bi-arrow-left"
-            viewBox="0 0 20 17"
+      <div className="row pt-4">
+        <div className="col">
+          <h1 className="">{volcano.Name}</h1>
+          <button
+            className="btn btn-outline-secondary btn-sm"
+            type="button"
+            onClick={() => {
+              setVolcanoSelected(false);
+            }}
           >
-            <path
-              fillRule="evenodd"
-              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-            />
-          </svg>
-          Back to {selectedCountry.name}
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              fill="currentColor"
+              className="bi bi-arrow-left"
+              viewBox="0 0 20 17"
+            >
+              <path
+                fillRule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+              />
+            </svg>
+            Back to {selectedCountry.name}
+          </button>
+          <InformationContainer volcano={volcano} />
+        </div>
+        <div className="col">
+          <BarChart
+            className="col"
+            width={600}
+            height={350}
+            series={[
+              { data: pop100, label: "100km", id: "pop100Id", stack: "total" },
+              { data: pop30, label: "30km", id: "pop30Id", stack: "total" },
+              { data: pop10, label: "10km", id: "pop10Id", stack: "total" },
+              { data: pop5, label: "5km", id: "pop5Id", stack: "total" },
+            ]}
+            xAxis={[{ data: label, scaleType: "band" }]}
+          />
+        </div>
       </div>
-
-      <InformationContainer volcano={volcano} />
     </div>
   );
 }
