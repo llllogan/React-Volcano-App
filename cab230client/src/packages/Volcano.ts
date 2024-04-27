@@ -75,6 +75,38 @@ export default class Volcano {
     ];
   }
 
+  public getPopulation5km(): number {
+    if (this.PopulationWithin5km === undefined) {
+      return 0;
+    }
+
+    return this.PopulationWithin5km;
+  }
+
+  public getPopulation10km(): number {
+    if (this.PopulationWithin10km === undefined) {
+      return 0;
+    }
+
+    return this.PopulationWithin10km;
+  }
+
+  public getPopulation30km(): number {
+    if (this.PopulationWithin30km === undefined) {
+      return 0;
+    }
+
+    return this.PopulationWithin30km;
+  }
+
+  public getPopulation100km(): number {
+    if (this.PopulationWithin100km === undefined) {
+      return 0;
+    }
+
+    return this.PopulationWithin100km;
+  }
+
   public getSummit(): string {
     if (this.Summit === undefined) {
       return "Unknown";

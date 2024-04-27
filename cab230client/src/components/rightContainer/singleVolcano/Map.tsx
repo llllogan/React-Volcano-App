@@ -36,6 +36,8 @@ export default function Map(props: Props) {
   const volcano = props.volcano;
   const center = volcano.getLatLngTuple();
 
+  console.log(volcano);
+
   const zoomLevel = volcano.hasPopulationData() ? 8 : 12;
 
   function getRadiusInformation() {

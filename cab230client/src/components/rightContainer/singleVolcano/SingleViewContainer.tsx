@@ -17,13 +17,8 @@ import { BarChart } from "@mui/x-charts";
 export default function SingleViewContainer() {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
   const { selectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
-  const { volcanoClient } = useContext(
-    VolcanoClientContext
-  ) as VolcanoClientContextType;
-
-  const { setVolcanoSelected } = useContext(
-    VolcanoSelectedContext
-  ) as VolcanoSelectedContextType;
+  const { volcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
+  const { setVolcanoSelected } = useContext(VolcanoSelectedContext) as VolcanoSelectedContextType;
 
   const [volcano, setVolcano] = useState<Volcano>(new Volcano(selectedVolcano));
   const [populationData, setPopulationData] = useState<number[]>([0, 0, 0, 0]);
@@ -37,7 +32,6 @@ export default function SingleViewContainer() {
       volcanoData.Id = volcano.getId();
       setVolcano(volcanoData);
       setMapLoaded(true);
-      setPopulationData(volcano.getPopulationData());
     };
 
     getVolcanoFromApi();
@@ -77,18 +71,13 @@ export default function SingleViewContainer() {
           <div className="col">
             <BarChart
               className="col"
-              width={600}
+              width={580}
               height={350}
               series={[
-                {
-                  data: [populationData[0]],
-                  label: "100km",
-                  id: "pop100Id",
-                  stack: "total",
-                },
-                { data: [populationData[1]], label: "30km", id: "pop30Id", stack: "total" },
-                { data: [populationData[2]], label: "10km", id: "pop10Id", stack: "total" },
-                { data: [populationData[3]], label: "5km", id: "pop5Id", stack: "total" },
+                { data: [volcano.getPopulation100km()], label: "100km", id: "pop100Id", stack: "total" },
+                { data: [volcano.getPopulation30km()], label: "30km", id: "pop30Id", stack: "total" },
+                { data: [volcano.getPopulation10km()], label: "10km", id: "pop10Id", stack: "total" },
+                { data: [volcano.getPopulation5km()], label: "5km", id: "pop5Id", stack: "total" },
               ]}
               xAxis={[{ data: ["Population Spread"], scaleType: "band" }]}
             />
