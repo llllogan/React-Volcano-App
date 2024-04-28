@@ -39,7 +39,7 @@ export default function SingleViewContainer() {
 
   return (
     <div>
-      {mapLoaded ? <Map volcano={volcano}></Map> : null}
+      {mapLoaded ? <Map/> : null}
       <div className="row pt-4">
         <div className="col">
           <h1 className="">{volcano.Name}</h1>

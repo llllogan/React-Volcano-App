@@ -2,6 +2,8 @@ import { Circle, MapContainer, TileLayer, Tooltip, Marker } from "react-leaflet"
 import "leaflet/dist/leaflet.css";
 import Volcano from "../../../packages/Volcano";
 import { LatLngTuple } from "leaflet";
+import { useContext, useEffect, useState } from "react";
+import { VolcanoContext, VolcanoContextType } from "../../../packages/Context";
 
 interface overlayProps {
   center: LatLngTuple;
@@ -28,17 +30,24 @@ function RadiusOverlays(props: overlayProps) {
   );
 }
 
-interface Props {
-  volcano: Volcano;
-}
 
-export default function Map(props: Props) {
-  const volcano = props.volcano;
+export default function Map() {
+
+  const { selectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
+  const [volcano] = useState<Volcano>(new Volcano(selectedVolcano));
+
+  const [zoomLevel, setZoomLevel] = useState<number>(12);
   const center = volcano.getLatLngTuple();
 
   console.log(volcano);
 
-  const zoomLevel = volcano.hasPopulationData() ? 8 : 12;
+  useEffect(() => {
+    if (volcano.hasPopulationData()) {
+      setZoomLevel(8);
+      console.log("HELLO");
+    }
+    console.log("Outside");
+  }, [volcano]);
 
   function getRadiusInformation() {
 
