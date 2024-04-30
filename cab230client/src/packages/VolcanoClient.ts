@@ -77,7 +77,6 @@ export default class VolcanoApiClient {
         // Convert the data array to an array of Volcano objects
         const volcanoes = data.map((volcano) => {
             return new Volcano(volcano);
-            console.log("I have gotten this from the api", volcano);
         });
 
         if (response.status !== 200) {
@@ -182,7 +181,7 @@ export default class VolcanoApiClient {
 
     // Function to get bearer token for a user
     private async logIn(username: string, password: string) {
-        const response = await fetch(`${this.baseUrl}/user/login2`, {
+        const response = await fetch(`${this.baseUrl}/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
