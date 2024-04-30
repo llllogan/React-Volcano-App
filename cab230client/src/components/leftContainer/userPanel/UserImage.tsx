@@ -10,10 +10,20 @@ export default function UserImage() {
   const { currentUser, setCurrentUser } = useContext(UserContext) as UserContextType;
   const { setVolcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
 
+  const buttonStyle = {
+    border: 'none',
+    background: 'none',
+    padding: '0',
+    font: 'inherit',
+    cursor: 'pointer',
+    outline: 'inherit',
+  };
+
+
   return (
     <div className="d-flex justify-content-center py-4">
       {currentUser.isLoggedIn ? (
-        <button onClick={() => {
+        <button style={buttonStyle} onClick={() => {
           setCurrentUser({ name: "", email: "", isLoggedIn: false });
           setVolcanoClient(new VolcanoApiClient({}));
         }}>
