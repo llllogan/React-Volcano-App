@@ -17,7 +17,10 @@ export default function UserLoginSignup() {
     e.preventDefault();
     if (input.username !== "" && input.password !== "" && !currentUser.isLoggedIn ) {
 
-      setCurrentUser({ name: input.username, email: input.username, isLoggedIn: true });
+      const dividingIndex = input.username.indexOf('@');
+      const username = input.username.slice(0, dividingIndex);
+
+      setCurrentUser({ name: username, email: input.username, isLoggedIn: true });
 
       const token = await volcanoClient.getToken(input.username, input.password);
 
