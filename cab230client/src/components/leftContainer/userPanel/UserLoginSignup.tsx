@@ -18,6 +18,10 @@ export default function UserLoginSignup() {
     if (input.username !== "" && input.password !== "" && !currentUser.isLoggedIn ) {
 
       const dividingIndex = input.username.indexOf('@');
+      if (dividingIndex === -1) {
+        alert("please provide a valid email");
+        return;
+      }
       const username = input.username.slice(0, dividingIndex);
 
       setCurrentUser({ name: username, email: input.username, isLoggedIn: true });
