@@ -1,16 +1,24 @@
 import LoggedOutUser from "../../../assets/icons/LoggedOutUser";
 import LoggedInUser from "../../../assets/icons/LoggedInUser";
 import { useContext } from "react";
-import { UserContext, UserContextType } from "../../../packages/Context";
+import { UserContext, UserContextType, VolcanoClientContext, VolcanoClientContextType } from "../../../packages/Context";
+import VolcanoApiClient from "../../../packages/VolcanoClient";
+
 
 export default function UserImage() {
   const size = 100;
-  const { currentUser } = useContext(UserContext) as UserContextType;
+  const { currentUser, setCurrentUser } = useContext(UserContext) as UserContextType;
+  const { setVolcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
 
   return (
-    <div className="d-flex justify-content-center py-5">
+    <div className="d-flex justify-content-center py-4">
       {currentUser.isLoggedIn ? (
-        <LoggedInUser size={size} />
+        <button onClick={() => {
+          setCurrentUser({ name: "", email: "", isLoggedIn: false });
+          setVolcanoClient(new VolcanoApiClient({}));
+        }}>
+           <LoggedInUser size={size} />
+        </button>
       ) : (
         <LoggedOutUser size={size} />
       )}

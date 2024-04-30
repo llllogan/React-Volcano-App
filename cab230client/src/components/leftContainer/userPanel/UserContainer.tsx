@@ -10,7 +10,9 @@ export default function UserInfoContainer() {
 
   return (
     <div className="mb-2 z-3 bg-light" id="userInfo">
-      {currentUser.isLoggedIn ? <p>click the image below to log out</p> : null}
+      {currentUser.isLoggedIn ? (
+        <p className="text-center text-secondary">click the image below to log out</p>
+      ) : null}
       <UserImage />
       {currentUser.isLoggedIn ? <HelloText /> : <UserLoginSignup />}
       <hr />
