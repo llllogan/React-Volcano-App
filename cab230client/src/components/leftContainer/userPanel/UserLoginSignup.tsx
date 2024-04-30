@@ -21,7 +21,7 @@ export default function UserLoginSignup() {
 
       const token = await volcanoClient.getToken(input.username, input.password);
 
-      setVolcanoClient(new VolcanoApiClient({token: token}));
+      setVolcanoClient(new VolcanoApiClient({token: token, username: input.username, password: input.password}));
       
     } else {
       alert("please provide a valid input");

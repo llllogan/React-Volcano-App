@@ -1,3 +1,4 @@
+import { IsNumberOptions } from 'class-validator';
 import { ILoginResponse, IRegisterResponse, IVolcano, LoginResponse, RegisterResponse } from './Interfaces';
 import Volcano from './Volcano';
 
@@ -18,10 +19,18 @@ export default class VolcanoApiClient {
 
     constructor(data: {
         token?: string;
+        username?: string;
+        password?: string;
     }) {
         if (data.token !== undefined) {
             this.bearerToken = data.token;
             this.loggedIn = true;
+        }
+        if (data.username !== undefined) {
+            this.username = data.username;
+        }
+        if (data.password !== undefined) {
+            this.password = data.password;
         }
     }
 
@@ -77,25 +86,47 @@ export default class VolcanoApiClient {
         return volcanoes;
     }
 
-    // Function to get a single volcano by its ID
     public async getVolcanoById(id: number) {
 
         let returnedData: IVolcano;
-        // If a token is provided, add it to the request headers
-        if (this.bearerToken !== "") {
-            const response = await fetch(`${this.baseUrl}/volcano/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${this.bearerToken}`
-                }
-            });
-            returnedData = await response.json() as IVolcano;
-        } else {
-            const response = await fetch(`${this.baseUrl}/volcano/${id}`);
-            returnedData = await response.json() as IVolcano;
-        }
 
-        return new Volcano(returnedData);
+        let continueLoop = true;
+        let loopCount = 0;
+
+        while(continueLoop) {
+            loopCount += 1;
+
+            if (loopCount > 5) {
+                continueLoop = false;
+            }
+
+            if (this.loggedIn) {
+                const response = await fetch(`${this.baseUrl}/volcano/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${this.bearerToken}`
+                    }
+                });
+
+                if (response.status === 401) {
+                    console.log("Token expired, getting new token");
+                    this.bearerToken = await this.getToken(this.username, this.password);
+                } else {
+                    returnedData = await response.json() as IVolcano;
+                    const volcano = new Volcano(returnedData);
+                    return volcano;
+                }
+
+            } else {
+                continueLoop = false;
+
+                const response = await fetch(`${this.baseUrl}/volcano/${id}`);
+                returnedData = await response.json() as IVolcano;
+
+                return new Volcano(returnedData);
+            }
+        }
+        return null;
     }
 
 
@@ -151,7 +182,7 @@ export default class VolcanoApiClient {
 
     // Function to get bearer token for a user
     private async logIn(username: string, password: string) {
-        const response = await fetch(`${this.baseUrl}/user/login`, {
+        const response = await fetch(`${this.baseUrl}/user/login2`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
