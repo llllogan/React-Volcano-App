@@ -1,4 +1,3 @@
-import { IsNumberOptions } from 'class-validator';
 import { ILoginResponse, IRegisterResponse, IVolcano, LoginResponse, RegisterResponse } from './Interfaces';
 import Volcano from './Volcano';
 
