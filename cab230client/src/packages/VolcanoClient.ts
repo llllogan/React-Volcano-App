@@ -86,10 +86,12 @@ export default class VolcanoApiClient {
 
     public async getVolcanoById(id: number) {
 
-        let returnedData: IVolcano;
-
         let continueLoop = true;
         let loopCount = 0;
+
+        if (!this.loggedIn) {
+            continueLoop = false;
+        }
 
         while(continueLoop) {
             loopCount += 1;
@@ -98,33 +100,27 @@ export default class VolcanoApiClient {
                 continueLoop = false;
             }
 
-            if (this.loggedIn) {
-                const response = await fetch(`${this.baseUrl}/volcano/${id}`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${this.bearerToken}`
-                    }
-                });
-
-                if (response.status === 401) {
-                    console.log("Token expired, getting new token");
-                    this.bearerToken = await this.getToken(this.username, this.password);
-                } else {
-                    returnedData = await response.json() as IVolcano;
-                    const volcano = new Volcano(returnedData);
-                    return volcano;
+            const response = await fetch(`${this.baseUrl}/volcano/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.bearerToken}`
                 }
+            });
 
+            if (response.status === 401) {
+                console.log("Token expired, getting new token");
+                this.bearerToken = await this.getToken(this.username, this.password);
             } else {
-                continueLoop = false;
-
-                const response = await fetch(`${this.baseUrl}/volcano/${id}`);
-                returnedData = await response.json() as IVolcano;
-
-                return new Volcano(returnedData);
+                const returnedData = await response.json() as IVolcano;
+                const volcano = new Volcano(returnedData);
+                return volcano;
             }
         }
-        return null;
+
+        const response = await fetch(`${this.baseUrl}/volcano/${id}`);
+        const returnedData = await response.json() as IVolcano;
+
+        return new Volcano(returnedData);
     }
 
 

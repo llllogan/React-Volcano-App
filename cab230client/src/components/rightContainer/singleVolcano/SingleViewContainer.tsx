@@ -21,7 +21,6 @@ export default function SingleViewContainer() {
   const { setVolcanoSelected } = useContext(VolcanoSelectedContext) as VolcanoSelectedContextType;
 
   const [volcano, setVolcano] = useState<Volcano>(new Volcano(selectedVolcano));
-  const [populationData, setPopulationData] = useState<number[]>([0, 0, 0, 0]);
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
