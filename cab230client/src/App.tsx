@@ -31,7 +31,9 @@ export default function App() {
       <VolcanoClientContext.Provider
         value={{ volcanoClient, setVolcanoClient }}
       >
-        <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+        <UserContext.Provider 
+          value={{ currentUser, setCurrentUser }}
+        >
           <CountryContext.Provider
             value={{ selectedCountry, setSelectedCountry }}
           >
