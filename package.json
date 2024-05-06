@@ -5,6 +5,7 @@
     "@mui/material": "^5.15.15",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/x-charts": "^7.3.0",
+    "@tanstack/react-router": "^1.31.20",
     "ag-grid-community": "^31.2.0",
     "ag-grid-react": "^31.2.0",
     "bootstrap": "^5.3.3",
