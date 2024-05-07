@@ -1,6 +1,4 @@
 import "./App.css";
-import CountriesPanel from "./components/leftContainer/countries/CountriesPanel";
-import UserInfoContainer from "./components/leftContainer/userPanel/UserContainer";
 import RightPanelContainer from "./components/rightContainer/RightPanelContainer";
 import { User, Country, IVolcano } from "./packages/Interfaces";
 import {
@@ -12,6 +10,7 @@ import {
 } from "./packages/Context";
 import { useState } from "react";
 import VolcanoApiClient from "./packages/VolcanoClient";
+import LeftPanelContainer from "./components/leftContainer/LeftContainer";
 
 export default function App() {
   const loggedOutUser: User = {
@@ -45,9 +44,7 @@ export default function App() {
               >
                 <div className="row">
                   <div className="col" id="leftPanel">
-                    
-                    <UserInfoContainer />
-                    <CountriesPanel />
+                    <LeftPanelContainer />
                   </div>
                   <div className="col-9">
                     <RightPanelContainer />
