@@ -4,14 +4,30 @@ import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { CountryContext, CountryContextType, VolcanoSelectedContext, VolcanoSelectedContextType, VolcanoContext, VolcanoContextType, VolcanoClientContextType, VolcanoClientContext } from "../../../packages/Context";
+import {
+  CountryContext,
+  CountryContextType,
+  VolcanoSelectedContext,
+  VolcanoSelectedContextType,
+  VolcanoContext,
+  VolcanoContextType,
+  VolcanoClientContextType,
+  VolcanoClientContext,
+} from "../../../packages/Context";
 import { IVolcano } from "../../../packages/Interfaces";
+import { Link } from "@tanstack/react-router";
 
 export default function VolcanoGrid(props: { radius: number }) {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
-  const { setVolcanoSelected } = useContext(VolcanoSelectedContext) as VolcanoSelectedContextType;
-  const { setSelectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
-  const { volcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
+  const { setVolcanoSelected } = useContext(
+    VolcanoSelectedContext
+  ) as VolcanoSelectedContextType;
+  const { setSelectedVolcano } = useContext(
+    VolcanoContext
+  ) as VolcanoContextType;
+  const { volcanoClient } = useContext(
+    VolcanoClientContext
+  ) as VolcanoClientContextType;
 
   const [rowData, setRowData] = useState<
     {
@@ -24,7 +40,7 @@ export default function VolcanoGrid(props: { radius: number }) {
   >();
 
   const [columnDefs] = useState<ColDef[]>([
-    { field: "id", hide: true},
+    { field: "id", hide: true },
     { field: "name", flex: 1 },
     { field: "country", hide: true },
     { field: "region", flex: 1 },
@@ -35,16 +51,18 @@ export default function VolcanoGrid(props: { radius: number }) {
     () => ({
       sortable: true,
       filter: true,
-      type: "fitGridWidth",
     }),
     []
   );
 
-  const cellClickListener = useCallback((e: CellClickedEvent) => {
-    const volcanoDataFromGrid: IVolcano = e.data;
-    setSelectedVolcano(volcanoDataFromGrid);
-    setVolcanoSelected(true);
-  }, [setSelectedVolcano, setVolcanoSelected]);
+  const cellClickListener = useCallback(
+    (e: CellClickedEvent) => {
+      const volcanoDataFromGrid: IVolcano = e.data;
+      setSelectedVolcano(volcanoDataFromGrid);
+      setVolcanoSelected(true);
+    },
+    [setSelectedVolcano, setVolcanoSelected]
+  );
 
   useEffect(() => {
     const fetchVolcanoes = async () => {
@@ -54,14 +72,13 @@ export default function VolcanoGrid(props: { radius: number }) {
       );
 
       setRowData(
-        volcanoes
-          .map((volcano) => ({
-            id: volcano.Id,
-            name: volcano.Name,
-            country: volcano.Country,
-            region: volcano.Region,
-            subregion: volcano.Subregion,
-          }))
+        volcanoes.map((volcano) => ({
+          id: volcano.Id,
+          name: volcano.Name,
+          country: volcano.Country,
+          region: volcano.Region,
+          subregion: volcano.Subregion,
+        }))
       );
     };
 
