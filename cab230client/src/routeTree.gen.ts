@@ -11,13 +11,13 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as VolcanoTableImport } from './routes/volcanoTable'
+import { Route as VolcanosImport } from './routes/volcanos'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const VolcanoTableRoute = VolcanoTableImport.update({
-  path: '/volcanoTable',
+const VolcanosRoute = VolcanosImport.update({
+  path: '/volcanos',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -34,8 +34,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/volcanoTable': {
-      preLoaderRoute: typeof VolcanoTableImport
+    '/volcanos': {
+      preLoaderRoute: typeof VolcanosImport
       parentRoute: typeof rootRoute
     }
   }
@@ -43,6 +43,6 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([IndexRoute, VolcanoTableRoute])
+export const routeTree = rootRoute.addChildren([IndexRoute, VolcanosRoute])
 
 /* prettier-ignore-end */

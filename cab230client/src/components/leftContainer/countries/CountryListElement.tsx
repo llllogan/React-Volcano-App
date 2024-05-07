@@ -1,6 +1,7 @@
 import CountryToIsoCode from "../../../packages/ISOCountryName";
 import { useContext } from "react";
 import { CountryContext, CountryContextType, VolcanoSelectedContext, VolcanoSelectedContextType } from "../../../packages/Context";
+import { Link } from '@tanstack/react-router'
 
 interface Props {
   name: string;
@@ -13,6 +14,7 @@ export default function CountryListElement(props: Props) {
   const { setVolcanoSelected } = useContext( VolcanoSelectedContext ) as VolcanoSelectedContextType;
 
   return (
+    <Link to={'/volcanos'}>
     <li
       className="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
       onClick={() => {
@@ -33,5 +35,6 @@ export default function CountryListElement(props: Props) {
         />
       </span>
     </li>
+    </Link>
   );
 }
