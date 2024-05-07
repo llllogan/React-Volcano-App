@@ -11,7 +11,7 @@ import {
 } from "../packages/Context";
 import { useState } from "react";
 import VolcanoApiClient from "../packages/VolcanoClient";
-import LeftPanelContainer from "../components/leftContainer/LeftContainer";
+import LeftPanelContainer from "../components/leftContainer/LeftPanelContainer";
 
 
 export const Route = createRootRoute({

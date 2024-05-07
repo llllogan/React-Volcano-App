@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CountryListElement from "./CountryListElement";
+import { Link } from '@tanstack/react-router'
 
 interface Props {
   countries: string[];
@@ -16,7 +17,9 @@ export default function CountryList(props: Props) {
     <>
       <ul className="list-group overflow-auto">
         {countries.map((name, index) => (
-          <CountryListElement key={index} name={name} />
+          <Link to={'/volcanoTable'}>
+            <CountryListElement key={index} name={name} />
+          </Link>
         ))}
       </ul>
     </>
