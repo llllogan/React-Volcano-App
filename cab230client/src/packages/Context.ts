@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, createContext } from "react";
-import { User, Country, IVolcano } from "./Interfaces";
+import { User, Country } from "./Interfaces";
 import VolcanoApiClient from "./VolcanoClient";
+import Volcano from "./Volcano";
 
 export interface UserContextType {
   currentUser: User;
@@ -17,8 +18,8 @@ export interface CountryContextType {
 export const CountryContext = createContext<CountryContextType | null>(null);
 
 export interface VolcanoContextType {
-  selectedVolcano: IVolcano;
-  setSelectedVolcano: Dispatch<SetStateAction<IVolcano>>;
+  selectedVolcano: Volcano;
+  setSelectedVolcano: Dispatch<SetStateAction<Volcano>>;
 }
 
 export const VolcanoContext = createContext<VolcanoContextType | null>(null);

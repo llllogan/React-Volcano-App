@@ -7,15 +7,9 @@ import {
   useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import Volcano from "../../../packages/Volcano";
-import { LatLng, LatLngTuple } from "leaflet";
+import { LatLngTuple } from "leaflet";
 import { useContext, useEffect, useState } from "react";
-import {
-  VolcanoClientContext,
-  VolcanoClientContextType,
-  VolcanoContext,
-  VolcanoContextType,
-} from "../../../packages/Context";
+import { VolcanoContext, VolcanoContextType } from "../../../packages/Context";
 
 interface overlayProps {
   center: LatLngTuple;
@@ -56,31 +50,18 @@ function RadiusOverlays(props: overlayProps) {
 
 export default function Map() {
   const { selectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
-  const { volcanoClient } = useContext(
-    VolcanoClientContext
-  ) as VolcanoClientContextType;
-  const [volcano, setVolcano] = useState<Volcano>(new Volcano(selectedVolcano));
   const [center, setCenter] = useState<LatLngTuple>([0, 0]);
   const [zoom, setZoom] = useState(12);
 
   useEffect(() => {
-    const getVolcanoFromApi = async () => {
-      const volcanoData: Volcano = await volcanoClient.getVolcanoById(
-        volcano.getId()
-      );
-      volcanoData.Id = volcano.getId();
-      setVolcano(volcanoData);
-      setCenter(volcanoData.getLatLngTuple());
+    setCenter(selectedVolcano.getLatLngTuple());
 
-      if (volcanoData.hasPopulationData()) {
-        setZoom(8);
-      }
-    };
+    if (selectedVolcano.hasPopulationData()) {
+      setZoom(8);
+    }
+  }, [selectedVolcano]);
 
-    getVolcanoFromApi();
-  }, [volcanoClient]);
-
-  const RecenterAutomatically = ({center}: {center: LatLngTuple}) => {
+  const RecenterAutomatically = ({ center }: { center: LatLngTuple }) => {
     const map = useMap();
     useEffect(() => {
       map.setView(center);
@@ -88,7 +69,7 @@ export default function Map() {
     return null;
   };
 
-  const ZoomAutomatically = ({zoomLevel}: {zoomLevel: number}) => {
+  const ZoomAutomatically = ({ zoomLevel }: { zoomLevel: number }) => {
     const map = useMap();
     useEffect(() => {
       map.setZoom(zoomLevel);
@@ -97,17 +78,14 @@ export default function Map() {
   };
 
   function getRadiusInformation() {
-    if (volcano.hasPopulationData()) {
+    if (selectedVolcano.hasPopulationData()) {
       return RadiusOverlays({
-        center: volcano.getLatLngTuple(),
-        population: volcano.getPopulationData(),
+        center: selectedVolcano.getLatLngTuple(),
+        population: selectedVolcano.getPopulationData(),
       });
     }
     return null;
   }
-
-  console.log("I have been rendered");
-  console.log(center);
 
   return (
     <div>

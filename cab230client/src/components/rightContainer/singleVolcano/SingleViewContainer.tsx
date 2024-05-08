@@ -16,20 +16,25 @@ import { BarChart } from "@mui/x-charts";
 
 export default function SingleViewContainer() {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
-  const { selectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
-  const { volcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
-  const { setVolcanoSelected } = useContext(VolcanoSelectedContext) as VolcanoSelectedContextType;
+  const { selectedVolcano, setSelectedVolcano } = useContext(
+    VolcanoContext
+  ) as VolcanoContextType;
+  const { volcanoClient } = useContext(
+    VolcanoClientContext
+  ) as VolcanoClientContextType;
+  const { setVolcanoSelected } = useContext(
+    VolcanoSelectedContext
+  ) as VolcanoSelectedContextType;
 
-  const [volcano, setVolcano] = useState<Volcano>(new Volcano(selectedVolcano));
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
     const getVolcanoFromApi = async () => {
       const volcanoData: Volcano = await volcanoClient.getVolcanoById(
-        volcano.getId()
+        selectedVolcano.getId()
       );
-      volcanoData.Id = volcano.getId();
-      setVolcano(volcanoData);
+      volcanoData.Id = selectedVolcano.getId();
+      setSelectedVolcano(volcanoData);
       setMapLoaded(true);
     };
 
@@ -38,10 +43,10 @@ export default function SingleViewContainer() {
 
   return (
     <div>
-      {mapLoaded ? <Map/> : null}
+      {mapLoaded ? <Map /> : null}
       <div className="row pt-4">
         <div className="col">
-          <h1 className="">{volcano.Name}</h1>
+          <h1 className="">{selectedVolcano.Name}</h1>
           <button
             className="btn btn-outline-secondary btn-sm"
             type="button"
@@ -64,19 +69,39 @@ export default function SingleViewContainer() {
             </svg>
             Back to {selectedCountry.name}
           </button>
-          <InformationContainer volcano={volcano} />
+          <InformationContainer volcano={selectedVolcano} />
         </div>
-        {volcano.hasPopulationData() ? (
+        {selectedVolcano.hasPopulationData() ? (
           <div className="col">
             <BarChart
               className="col"
               width={580}
               height={350}
               series={[
-                { data: [volcano.getPopulation100km()], label: "100km", id: "pop100Id", stack: "total" },
-                { data: [volcano.getPopulation30km()], label: "30km", id: "pop30Id", stack: "total" },
-                { data: [volcano.getPopulation10km()], label: "10km", id: "pop10Id", stack: "total" },
-                { data: [volcano.getPopulation5km()], label: "5km", id: "pop5Id", stack: "total" },
+                {
+                  data: [selectedVolcano.getPopulation100km()],
+                  label: "100km",
+                  id: "pop100Id",
+                  stack: "total",
+                },
+                {
+                  data: [selectedVolcano.getPopulation30km()],
+                  label: "30km",
+                  id: "pop30Id",
+                  stack: "total",
+                },
+                {
+                  data: [selectedVolcano.getPopulation10km()],
+                  label: "10km",
+                  id: "pop10Id",
+                  stack: "total",
+                },
+                {
+                  data: [selectedVolcano.getPopulation5km()],
+                  label: "5km",
+                  id: "pop5Id",
+                  stack: "total",
+                },
               ]}
               xAxis={[{ data: ["Population Spread"], scaleType: "band" }]}
             />
