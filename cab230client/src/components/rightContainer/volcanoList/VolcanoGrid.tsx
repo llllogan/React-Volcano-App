@@ -63,7 +63,7 @@ export default function VolcanoGrid(props: { radius: number }) {
       const volcano = new Volcano(volcanoDataFromGrid);
       setSelectedVolcano(volcano);
       setVolcanoSelected(true);
-      navigate({ to: '/volcano'})
+      navigate({ to: '/volcano' });
     },
     [setSelectedVolcano, setVolcanoSelected]
   );

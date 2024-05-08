@@ -9,10 +9,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import { LatLngTuple } from "leaflet";
 import { useContext, useEffect, useState } from "react";
-import {
-  VolcanoContext,
-  VolcanoContextType,
-} from "../../../packages/Context";
+import { VolcanoContext, VolcanoContextType } from "../../../packages/Context";
 
 interface overlayProps {
   center: LatLngTuple;
@@ -59,12 +56,12 @@ export default function Map() {
   useEffect(() => {
     setCenter(selectedVolcano.getLatLngTuple());
 
-      if (selectedVolcano.hasPopulationData()) {
-        setZoom(8);
-      }
+    if (selectedVolcano.hasPopulationData()) {
+      setZoom(8);
+    }
   }, [selectedVolcano]);
 
-  const RecenterAutomatically = ({center}: {center: LatLngTuple}) => {
+  const RecenterAutomatically = ({ center }: { center: LatLngTuple }) => {
     const map = useMap();
     useEffect(() => {
       map.setView(center);
@@ -72,7 +69,7 @@ export default function Map() {
     return null;
   };
 
-  const ZoomAutomatically = ({zoomLevel}: {zoomLevel: number}) => {
+  const ZoomAutomatically = ({ zoomLevel }: { zoomLevel: number }) => {
     const map = useMap();
     useEffect(() => {
       map.setZoom(zoomLevel);
