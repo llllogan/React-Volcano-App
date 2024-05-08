@@ -15,7 +15,8 @@ import {
   VolcanoClientContext,
 } from "../../../packages/Context";
 import { IVolcano } from "../../../packages/Interfaces";
-import { Link } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
+import Volcano from "../../../packages/Volcano";
 
 export default function VolcanoGrid(props: { radius: number }) {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
@@ -28,6 +29,7 @@ export default function VolcanoGrid(props: { radius: number }) {
   const { volcanoClient } = useContext(
     VolcanoClientContext
   ) as VolcanoClientContextType;
+  const navigate = useNavigate();
 
   const [rowData, setRowData] = useState<
     {
@@ -58,8 +60,10 @@ export default function VolcanoGrid(props: { radius: number }) {
   const cellClickListener = useCallback(
     (e: CellClickedEvent) => {
       const volcanoDataFromGrid: IVolcano = e.data;
-      setSelectedVolcano(volcanoDataFromGrid);
+      const volcano = new Volcano(volcanoDataFromGrid);
+      setSelectedVolcano(volcano);
       setVolcanoSelected(true);
+      navigate({ to: '/volcano'})
     },
     [setSelectedVolcano, setVolcanoSelected]
   );
