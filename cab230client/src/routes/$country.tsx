@@ -13,6 +13,7 @@ function VolcanoTable() {
   const { setSelectedCountry } = useContext( CountryContext ) as CountryContextType;
 
   setSelectedCountry(country);
+
   
   return (
     <CountriesVolcanoesContainer />

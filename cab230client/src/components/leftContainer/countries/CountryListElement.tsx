@@ -1,7 +1,7 @@
 import CountryToIsoCode from "../../../packages/ISOCountryName";
 import { useContext } from "react";
-import { CountryContext, CountryContextType, VolcanoSelectedContext, VolcanoSelectedContextType } from "../../../packages/Context";
-import { Link, useNavigate } from '@tanstack/react-router'
+import { VolcanoSelectedContext, VolcanoSelectedContextType } from "../../../packages/Context";
+import { useNavigate } from '@tanstack/react-router'
 
 interface Props {
   name: string;

@@ -1,18 +1,20 @@
 import { useContext } from "react";
 import { CountryContext, CountryContextType } from "../../../packages/Context";
-
 import VolcanoGridInputs from "./VolcanoGridInputs";
 import CountryToIsoCode from "../../../packages/ISOCountryName";
 
-export default function CountriesVolcanoesContainer() {
-  const { selectedCountry } = useContext(CountryContext) as CountryContextType;
 
+export default function CountriesVolcanoesContainer() {
+
+  const { selectedCountry } = useContext(CountryContext) as CountryContextType;
   const countryCode = CountryToIsoCode(selectedCountry);
+
+  console.log(selectedCountry);
 
   return (
     <>
       <div className="d-flex justify-context-between">
-        <h1 className="p-2 flex-grow-1">{selectedCountry}</h1>
+        <h1 className="p-2 flex-grow-1">{typeof selectedCountry === 'string' ? selectedCountry : "loading"}</h1>
         <span>
           <img
             src={
@@ -23,7 +25,7 @@ export default function CountriesVolcanoesContainer() {
           />
         </span>
       </div>
-      <VolcanoGridInputs />
+      {typeof selectedCountry === 'string' ? <VolcanoGridInputs /> : null}
     </>
   );
 }
