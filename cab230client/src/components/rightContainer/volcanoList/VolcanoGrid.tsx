@@ -20,15 +20,9 @@ import Volcano from "../../../packages/Volcano";
 
 export default function VolcanoGrid(props: { radius: number }) {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
-  const { setVolcanoSelected } = useContext(
-    VolcanoSelectedContext
-  ) as VolcanoSelectedContextType;
-  const { setSelectedVolcano } = useContext(
-    VolcanoContext
-  ) as VolcanoContextType;
-  const { volcanoClient } = useContext(
-    VolcanoClientContext
-  ) as VolcanoClientContextType;
+  const { setVolcanoSelected } = useContext(VolcanoSelectedContext) as VolcanoSelectedContextType;
+  const { setSelectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
+  const { volcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
   const navigate = useNavigate();
 
   const [rowData, setRowData] = useState<
@@ -63,7 +57,7 @@ export default function VolcanoGrid(props: { radius: number }) {
       const volcano = new Volcano(volcanoDataFromGrid);
       setSelectedVolcano(volcano);
       setVolcanoSelected(true);
-      navigate({ to: '/volcano' });
+      navigate({ to: '/$country/$volcano', params: { country: volcano.Country, volcano: volcano.Name} });
     },
     [setSelectedVolcano, setVolcanoSelected]
   );

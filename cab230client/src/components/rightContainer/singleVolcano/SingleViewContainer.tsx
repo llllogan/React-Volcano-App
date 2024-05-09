@@ -6,8 +6,6 @@ import {
   VolcanoClientContextType,
   VolcanoContext,
   VolcanoContextType,
-  VolcanoSelectedContext,
-  VolcanoSelectedContextType,
 } from "../../../packages/Context";
 import Volcano from "../../../packages/Volcano";
 import Map from "./Map";
@@ -22,14 +20,12 @@ export default function SingleViewContainer() {
   const { volcanoClient } = useContext(
     VolcanoClientContext
   ) as VolcanoClientContextType;
-  const { setVolcanoSelected } = useContext(
-    VolcanoSelectedContext
-  ) as VolcanoSelectedContextType;
 
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
     const getVolcanoFromApi = async () => {
+      console.log(selectedVolcano);
       const volcanoData: Volcano = await volcanoClient.getVolcanoById(
         selectedVolcano.getId()
       );
@@ -51,7 +47,7 @@ export default function SingleViewContainer() {
             className="btn btn-outline-secondary btn-sm"
             type="button"
             onClick={() => {
-              setVolcanoSelected(false);
+              // TODO: repalce this with navigate to
             }}
           >
             <svg

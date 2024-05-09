@@ -11,24 +11,24 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as VolcanosImport } from './routes/volcanos'
-import { Route as VolcanoImport } from './routes/volcano'
+import { Route as CountryImport } from './routes/$country'
 import { Route as IndexImport } from './routes/index'
+import { Route as CountryVolcanoImport } from './routes/$country_.$volcano'
 
 // Create/Update Routes
 
-const VolcanosRoute = VolcanosImport.update({
-  path: '/volcanos',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const VolcanoRoute = VolcanoImport.update({
-  path: '/volcano',
+const CountryRoute = CountryImport.update({
+  path: '/$country',
   getParentRoute: () => rootRoute,
 } as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CountryVolcanoRoute = CountryVolcanoImport.update({
+  path: '/$country/$volcano',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -40,12 +40,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/volcano': {
-      preLoaderRoute: typeof VolcanoImport
+    '/$country': {
+      preLoaderRoute: typeof CountryImport
       parentRoute: typeof rootRoute
     }
-    '/volcanos': {
-      preLoaderRoute: typeof VolcanosImport
+    '/$country/$volcano': {
+      preLoaderRoute: typeof CountryVolcanoImport
       parentRoute: typeof rootRoute
     }
   }
@@ -55,8 +55,8 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
-  VolcanoRoute,
-  VolcanosRoute,
+  CountryRoute,
+  CountryVolcanoRoute,
 ])
 
 /* prettier-ignore-end */
