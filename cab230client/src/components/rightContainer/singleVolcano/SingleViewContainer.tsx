@@ -14,12 +14,8 @@ import { BarChart } from "@mui/x-charts";
 
 export default function SingleViewContainer() {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
-  const { selectedVolcano, setSelectedVolcano } = useContext(
-    VolcanoContext
-  ) as VolcanoContextType;
-  const { volcanoClient } = useContext(
-    VolcanoClientContext
-  ) as VolcanoClientContextType;
+  const { selectedVolcano, setSelectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
+  const { volcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
 
   const [mapLoaded, setMapLoaded] = useState(false);
 

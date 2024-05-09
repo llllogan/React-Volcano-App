@@ -19,6 +19,7 @@ export default function CountryListElement(props: Props) {
     <li
       className="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
       onClick={() => {
+        console.log(props.name);
         setSelectedCountry({
           name: props.name,
           code: isoCountryCode,
