@@ -10,7 +10,6 @@ interface Props {
 export default function CountryListElement(props: Props) {
   const isoCountryCode = CountryToIsoCode(props.name);
 
-  const { setSelectedCountry } = useContext( CountryContext ) as CountryContextType;
   const { setVolcanoSelected } = useContext( VolcanoSelectedContext ) as VolcanoSelectedContextType;
   
   const navigate = useNavigate();
@@ -19,12 +18,6 @@ export default function CountryListElement(props: Props) {
     <li
       className="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
       onClick={() => {
-        console.log(props.name);
-        setSelectedCountry({
-          name: props.name,
-          code: isoCountryCode,
-          volcanoes: [],
-        });
         setVolcanoSelected(false);
         navigate({ to: '/$country', params: { country: props.name } });
       }}

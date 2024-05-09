@@ -48,8 +48,7 @@ export default function VolcanoGrid(props: { radius: number }) {
     []
   );
 
-  const cellClickListener = useCallback(
-    (e: CellClickedEvent) => {
+  const cellClickListener = useCallback( (e: CellClickedEvent) => {
       const volcanoDataFromGrid: IVolcano = e.data;
       setSelectedVolcano(new Volcano(volcanoDataFromGrid));
       navigate({ to: '/$country/$volcano', params: { country: volcanoDataFromGrid.country, volcano: volcanoDataFromGrid.name} });
@@ -60,7 +59,7 @@ export default function VolcanoGrid(props: { radius: number }) {
   useEffect(() => {
     const fetchVolcanoes = async () => {
       const volcanoes = await volcanoClient.getVolcanoes(
-        selectedCountry.name,
+        selectedCountry,
         props.radius
       );
 
@@ -76,7 +75,7 @@ export default function VolcanoGrid(props: { radius: number }) {
     };
 
     fetchVolcanoes();
-  }, [selectedCountry.name, props.radius, volcanoClient]);
+  }, [selectedCountry, props.radius, volcanoClient]);
 
   return (
     <div className="ag-theme-alpine" style={{ height: "80vh" }}>

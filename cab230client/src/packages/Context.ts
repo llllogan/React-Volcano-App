@@ -11,8 +11,8 @@ export interface UserContextType {
 export const UserContext = createContext<UserContextType | null>(null);
 
 export interface CountryContextType {
-  selectedCountry: Country;
-  setSelectedCountry: Dispatch<SetStateAction<Country>>;
+  selectedCountry: string;
+  setSelectedCountry: Dispatch<SetStateAction<string>>;
 }
 
 export const CountryContext = createContext<CountryContextType | null>(null);

@@ -84,6 +84,18 @@ export default class VolcanoApiClient {
         return volcanoes;
     }
 
+    public async getVolcanoByName(country: string, name: string) {
+
+        const volcanoes = await this.getVolcanoes(country ,101)
+
+        // Iterate through the list of volcanoes to find the one with the matching name
+        for (const volcano of volcanoes) {
+            if (volcano.Name === name) {
+                return volcano;
+            }
+        }
+    }
+
     public async getVolcanoById(id: number) {
 
         let continueLoop = true;
