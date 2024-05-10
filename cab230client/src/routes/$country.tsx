@@ -11,10 +11,8 @@ function VolcanoTable() {
 
   const { country } = Route.useParams();
   const { setSelectedCountry } = useContext( CountryContext ) as CountryContextType;
-
   setSelectedCountry(country);
 
-  
   return (
     <CountriesVolcanoesContainer />
   )
