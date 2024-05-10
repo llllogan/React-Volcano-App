@@ -11,11 +11,13 @@ import Volcano from "../../../packages/Volcano";
 import Map from "./Map";
 import InformationContainer from "./InformationContainer";
 import { BarChart } from "@mui/x-charts";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function SingleViewContainer() {
   const { selectedCountry } = useContext(CountryContext) as CountryContextType;
   const { selectedVolcano, setSelectedVolcano } = useContext(VolcanoContext) as VolcanoContextType;
   const { volcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
+  const navigate = useNavigate();
 
   const [mapLoaded, setMapLoaded] = useState(false);
 
@@ -43,7 +45,7 @@ export default function SingleViewContainer() {
             className="btn btn-outline-secondary btn-sm"
             type="button"
             onClick={() => {
-              // TODO: repalce this with navigate to
+              navigate({ to: '/$country', params: { country: selectedVolcano.Country } });
             }}
           >
             <svg
