@@ -26,7 +26,7 @@ function RootComponent() {
   };
 
   const [currentUser, setCurrentUser] = useState(loggedOutUser);
-  const [selectedCountry, setSelectedCountry] = useState({} as Country);
+  const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedVolcano, setSelectedVolcano] = useState({} as Volcano);
   const [volcanoSelected, setVolcanoSelected] = useState(false);
   const [volcanoClient, setVolcanoClient] = useState(new VolcanoApiClient({}));
