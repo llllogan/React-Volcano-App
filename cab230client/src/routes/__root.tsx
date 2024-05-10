@@ -54,7 +54,6 @@ function RootComponent() {
                     <Outlet />
                   </div>
                 </div>
-                <TanStackRouterDevtools />
               </VolcanoContext.Provider>
             </VolcanoSelectedContext.Provider>
           </CountryContext.Provider>
