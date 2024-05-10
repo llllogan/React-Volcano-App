@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import CountryList from "./CountryList";
-import "../../../App";
 
 function filterCountries(searchTerm: string, countries: string[]) {
   const filterCountries: string[] = [];
