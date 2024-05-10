@@ -1,7 +1,6 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import "../App.css";
-import { User, Country } from "../packages/Interfaces";
+import { User } from "../packages/Interfaces";
 import {
   UserContext,
   CountryContext,

@@ -19,7 +19,7 @@ export default function RightPanelContainer() {
   }
 
   // If not, show a grid of volcanos for the selected country
-  if (selectedCountry.name !== undefined) {
+  if (selectedCountry !== undefined) {
     return <CountriesVolcanoesContainer />;
   }
 

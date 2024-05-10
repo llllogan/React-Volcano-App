@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, createContext } from "react";
-import { User, Country } from "./Interfaces";
+import { User } from "./Interfaces";
 import VolcanoApiClient from "./VolcanoClient";
 import Volcano from "./Volcano";
 
