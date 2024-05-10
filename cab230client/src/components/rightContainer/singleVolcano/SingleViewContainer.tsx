@@ -29,6 +29,7 @@ export default function SingleViewContainer() {
       );
       volcanoData.Id = selectedVolcano.getId();
       setSelectedVolcano(volcanoData);
+      console.log(volcanoData);
       setMapLoaded(true);
     };
 

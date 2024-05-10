@@ -27,6 +27,7 @@ function DetailedVolcanoView() {
       if (volcanoFromApi !== undefined) {
         console.log(volcanoFromApi);
         setSelectedVolcano(volcanoFromApi);
+        console.log(volcanoFromApi);
         setVolcanoLoaded(true);
       }
     }

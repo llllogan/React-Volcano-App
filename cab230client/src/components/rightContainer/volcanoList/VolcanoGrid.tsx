@@ -5,16 +5,14 @@ import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import {
-  CountryContext,
-  CountryContextType,
   VolcanoClientContextType,
   VolcanoClientContext,
 } from "../../../packages/Context";
 import { IVolcano } from "../../../packages/Interfaces";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
 
 export default function VolcanoGrid(props: { radius: number }) {
-  const { selectedCountry } = useContext(CountryContext) as CountryContextType;
+  const { country } = useParams({from: "/$country"})
   const { volcanoClient } = useContext(VolcanoClientContext) as VolcanoClientContextType;
   const navigate = useNavigate();
 
@@ -52,7 +50,7 @@ export default function VolcanoGrid(props: { radius: number }) {
   useEffect(() => {
     const fetchVolcanoes = async () => {
       const volcanoes = await volcanoClient.getVolcanoes(
-        selectedCountry,
+        country,
         props.radius
       );
 
@@ -68,7 +66,7 @@ export default function VolcanoGrid(props: { radius: number }) {
     };
 
     fetchVolcanoes();
-  }, [selectedCountry, props.radius, volcanoClient]);
+  }, [country, props.radius, volcanoClient]);
 
   return (
     <div className="ag-theme-alpine" style={{ height: "80vh" }}>
