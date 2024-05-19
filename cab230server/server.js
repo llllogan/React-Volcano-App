@@ -7,8 +7,10 @@ app.get("/", (req, res) => {
 })
 
 const meRouter = require("./routes/me");
+const volcanoRouter = require("./routes/volcano");
 
 app.use("/me", meRouter);
+app.use("/volcano", volcanoRouter);
 
 app.listen(3000);
 
