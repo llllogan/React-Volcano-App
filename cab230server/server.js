@@ -8,9 +8,12 @@ app.get("/", (req, res) => {
 
 const meRouter = require("./routes/me");
 const volcanoRouter = require("./routes/volcano");
+const userRouter = require("./routes/user");
 
 app.use("/me", meRouter);
 app.use("/volcano", volcanoRouter);
+app.use("/user", userRouter);
+
 
 app.listen(3000);
 
