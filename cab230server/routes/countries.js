@@ -1,27 +1,14 @@
 const express = require("express");
+const dbClient = require("../middleware/dbMiddleware");
+
 const router = express.Router();
+router.use(dbClient);
 
-const knex = require('knex')({
-    client: 'mysql',
-    connection: {
-      host: '127.0.0.1',
-      port: 3306,
-      user: 'root',
-      password: 'admin',
-      database: 'volcanoes',
-    },
-  });
+router.get("/", async (req, res) => {
 
-router.get("/", (req, res) => {
+    const data = await req.db.getCountriesList();
 
-    let countries = [];
-
-    knex.select().distinct('country').from('data').then((rows) => {
-        rows.forEach((row) => {
-            countries.push(row.country);
-        });
-        res.json(countries);
-    } );
+    res.json(data);
 });
 
 module.exports = router;
