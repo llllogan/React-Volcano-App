@@ -1,23 +1,28 @@
 const express = require("express");
 const router = express.Router();
 
+const knex = require('knex')({
+    client: 'mysql',
+    connection: {
+      host: '127.0.0.1',
+      port: 3306,
+      user: 'root',
+      password: 'admin',
+      database: 'volcanoes',
+    },
+  });
+
 router.get("/", (req, res) => {
-    res.json(
-        [
-            {
-                "name": "Australia",
-                "population": 25000000
-            },
-            {
-                "name": "New Zealand",
-                "population": 5000000
-            },
-            {
-                "name": "Fiji",
-                "population": 1000000
-            }
-        ]
-    );
+
+    let countries = [];
+
+    knex.select().distinct('country').from('data').then((rows) => {
+        rows.forEach((row) => {
+            countries.push(row.country);
+        });
+        res.json(countries);
+    } );
 });
 
 module.exports = router;
+
