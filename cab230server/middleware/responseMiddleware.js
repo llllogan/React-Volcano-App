@@ -30,6 +30,11 @@ function responseMiddleware(req, res, next) {
         res.json(data);
     }
 
+    res.sendSuccessMessage = function(message) {
+        res.statusCode = 200;
+        res.json({message: message});
+    }
+
     next();
 }
 

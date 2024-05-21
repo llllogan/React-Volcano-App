@@ -1,5 +1,7 @@
 const express = require("express");
+const hashMiddleware = require("../middleware/hashMiddleware");
 const router = express.Router();
+router.use(hashMiddleware);
 
 router.post("/register", async (req, res) => {
 
@@ -17,13 +19,11 @@ router.post("/register", async (req, res) => {
         return;
     }
 
-    const hashedPassword = 
+    const hashedPassword = await req.hashPassword(user.password);
 
-    await req.db.createUser(user.email, user.password);
+    await req.db.createUser(user.email, hashedPassword);
 
-
-
-
+    res.sendSuccessMessage("User created");
 });
 
 router.post("/login", (req, res) => {});
