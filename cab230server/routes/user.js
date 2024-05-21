@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
 
     await req.db.createUser(user.email, hashedPassword);
 
-    res.sendSuccessMessage("User created");
+    res.sendCreated("User created");
 });
 
 router.post("/login", (req, res) => {});

@@ -30,8 +30,8 @@ function responseMiddleware(req, res, next) {
         res.json(data);
     }
 
-    res.sendSuccessMessage = function(message) {
-        res.statusCode = 200;
+    res.sendCreated = function(message) {
+        res.statusCode = 201;
         res.json({message: message});
     }
 
