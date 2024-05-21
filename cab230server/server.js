@@ -1,5 +1,10 @@
 const express = require("express");
+const dbClient = require("./middleware/dbMiddleware");
+const responseMethods = require("./middleware/responseMiddleware");
+
 const app = express();
+app.use(dbClient);
+app.use(responseMethods);
 
 app.get("/", (req, res) => {
 

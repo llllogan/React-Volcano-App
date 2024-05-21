@@ -1,14 +1,22 @@
 const express = require("express");
-const dbClient = require("../middleware/dbMiddleware");
 
 const router = express.Router();
-router.use(dbClient);
 
 router.get("/", async (req, res) => {
 
-    const data = await req.db.getCountriesList();
+    let queryParams = req.query;
 
-    res.json(data);
+    if (Object.keys(queryParams).length > 0) 
+    {
+        const data = await req.db.getCountriesList();
+
+        res.statusCode = 200;
+        res.json(data);
+
+    } else {
+
+    }
+
 });
 
 module.exports = router;
