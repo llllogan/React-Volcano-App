@@ -17,6 +17,26 @@ class DbClient {
 
         return countries;
     }
+
+    async getVolcanoesInCountry(country) {
+        let volcanoes = [];
+        let response = await knex.select().from('data').where('country', country);
+
+        response.forEach((row) => {
+
+            let volcano = {
+                id: row.id,
+                name: row.name,
+                country: row.country,
+                region: row.region,
+                subregion: row.subregion
+            }
+
+            volcanoes.push(volcano);
+        });
+
+        return volcanoes;
+    }
 }
 
 
