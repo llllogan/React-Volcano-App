@@ -4,19 +4,15 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
 
-    let queryParams = req.query;
+    let queryParams = req.getQueryParams();
 
-    if (Object.keys(queryParams).length > 0) 
+    if (queryParams == null) 
     {
         const data = await req.db.getCountriesList();
-
-        res.statusCode = 200;
-        res.json(data);
-
+        res.sendSuccess(data);
     } else {
-
+        res.sendError("Invalid query parameters. Query parameters are not permitted.");
     }
-
 });
 
 module.exports = router;

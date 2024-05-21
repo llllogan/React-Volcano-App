@@ -29,6 +29,8 @@ function responseMiddleware(req, res, next) {
         res.statusCode = 200;
         res.json(data);
     }
+
+    next();
 }
 
 module.exports = responseMiddleware;
