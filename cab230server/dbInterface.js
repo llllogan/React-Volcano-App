@@ -92,6 +92,19 @@ class DbClient {
             return response[0];
         }
     }
+
+    async getUserByEmail(email) {
+        let response = await knex.select().from('users').where('email', email);
+        if (response.length == 0) {
+            return null;
+        } else {
+            return response[0];
+        }
+    }
+
+    async createUser(email, password) {
+        await knex('users').insert({email: email, password: password});
+    }
 }
 
 

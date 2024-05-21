@@ -1,7 +1,30 @@
 const express = require("express");
 const router = express.Router();
 
-router.post("/register", (req, res) => {});
+router.post("/register", async (req, res) => {
+
+    const user = req.getEmailAndPassword();
+
+    if (user == null || !user.email.includes("@")) {
+        res.sendError("Request body incomplete, both email and password are required");
+        return;
+    }
+
+    const existingUser = await req.db.getUserByEmail(user.email);
+
+    if (existingUser != null) {
+        res.sendConflict("User already exists");
+        return;
+    }
+
+    const hashedPassword = 
+
+    await req.db.createUser(user.email, user.password);
+
+
+
+
+});
 
 router.post("/login", (req, res) => {});
 
