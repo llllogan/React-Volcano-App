@@ -82,7 +82,15 @@ class DbClient {
         });
 
         return volcanoes;
-    
+    }
+
+    async getVolcanoById(id) {
+        let response = await knex.select().from('data').where('id', id);
+        if (response.length == 0) {
+            return null;
+        } else {
+            return response[0];
+        }
     }
 }
 

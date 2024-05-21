@@ -1,14 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
     const id = req.params.id;
-    res.json(
-        {
-            "name": "Volcano",
-            "id": id
-        }
-    );
+
+    const data = await req.db.getVolcanoById(id);
+
+    if (data == null) {
+        res.sendNotFound("Volcano with ID: " + id + " not found.");
+        return;
+    }
+
+    res.sendSuccess(data);
 });
 
 router.route("/:id/eruptions")
