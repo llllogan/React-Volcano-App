@@ -26,7 +26,37 @@ router.post("/register", async (req, res) => {
     res.sendCreated("User created");
 });
 
-router.post("/login", (req, res) => {});
+router.post("/login", async (req, res) => {
+
+    const user = req.getEmailAndPassword();
+
+    if (user == null) {
+        res.sendError("Request body incomplete, both email and password are required");
+        return;
+    }
+
+    const existingUser = await req.db.getUserByEmail(user.email);
+
+    if (existingUser == null) {
+        res.sendUnauthorised("Incorrect email or password");
+        return;
+    }
+
+    const correctPassword = await req.checkPassword(user.password, existingUser.password);
+
+    if (!correctPassword) {
+        res.sendUnauthorised("Incorrect email or password");
+        return;
+    }
+
+    let tokenResponse = {
+        token: "Bearer token",
+        token_type: "Bearer",
+        expires_in: 86400
+    }
+
+    res.sendSuccess(tokenResponse);
+});
 
 router.route("/:email/profile")
     .get((req, res) => {})
