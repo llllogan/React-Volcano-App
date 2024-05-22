@@ -40,9 +40,10 @@ function requestMiddleware(req, res, next) {
         // Return the value of the header with the given name
         // Return null if there isnt any
 
-        let headers = req.headers;
-        if (headers[name]) {
-            return headers[name];
+        const specifiedHeader = req.headers[name.toLowerCase()];
+
+        if (specifiedHeader) {
+            return specifiedHeader;
         } else {
             return null;
         }
@@ -84,6 +85,34 @@ function requestMiddleware(req, res, next) {
             return null;
         }
     }
+
+    req.hasBearerToken = function() {
+        // Check the request headers for an Authorization field
+
+        let authHeader = req.getHeaderWithName('Authorization');
+        if (authHeader == null) {
+            return false;
+        }
+
+        if (authHeader.toLowerCase().includes('bearer')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    req.hasValidBearerToken = function() {
+        // Check the request headers for an Authorization field
+        if (req.hasBearerToken() == false) {
+            return false;
+        }
+
+        let authHeader = req.getHeaderWithName('Authorization');
+
+        return true;
+    }
+
+    
     
     next()
 }

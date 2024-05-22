@@ -58,15 +58,46 @@ router.post("/login", async (req, res) => {
     res.sendSuccess(tokenResponse);
 });
 
+
+router.param("email", async (req, res, next, email) => {
+    console.log("Trying to find user with email of: " + email)
+
+    let existingUser = await req.db.getUserByEmail(email);
+    req.existingUser = existingUser;
+    next();
+});
+
+
 router.route("/:email/profile")
-    .get((req, res) => {})
+    .get( (req, res) => {
+
+        if (req.hasBearerToken() && !req.hasValidBearerToken()) {
+            res.sendUnauthorised("JWT token has expired");
+            return;
+        }
+
+        if (req.existingUser == null) {
+            res.sendNotFound("User not found");
+            return;
+        }
+
+        const profile = {
+            email: req.existingUser.email,
+            firstName: req.existingUser.firstName,
+            lastName: req.existingUser.lastName,
+        }
+
+        if (req.hasValidBearerToken()) {
+            profile.address = req.existingUser.address;
+            profile.dob = req.existingUser.dob;
+        }
+
+        res.sendSuccess(profile);
+
+    })
     .put((req, res) => {})
     .delete((req, res) => {});
 
-router.param("email", (req, res, next, email) => {
-    console.log("Trying to find user with email of: " + email)
-    req.email = email;
-    next();
-});
+
 
 module.exports = router;

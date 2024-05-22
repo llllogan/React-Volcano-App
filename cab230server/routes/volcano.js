@@ -2,8 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/:id", async (req, res) => {
-    const id = req.params.id;
 
+    if (req.hasBearerToken() && !req.hasValidBearerToken()) {
+        res.sendUnauthorised("JWT token has expired");
+        return;
+    }
+
+    const id = req.params.id;
     const data = await req.db.getVolcanoById(id);
 
     if (data == null) {
