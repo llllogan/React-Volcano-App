@@ -11,7 +11,6 @@ function hashMiddleware(req, res, next) {
         return await bcrypt.compare(password, hash);
     }
 
-
     next();
 }
 
