@@ -65,6 +65,21 @@ function requestMiddleware(req, res, next) {
     }
 
     req.getProfileInformation = function() {
+        // Get the firstName, lastName, dob, and address from the request
+
+        let firstName = req.body.firstName;
+        let lastName = req.body.lastName;
+        let dob = req.body.dob;
+        let address = req.body.address;
+
+        if (firstName && lastName && dob && address) {
+            return {firstName: firstName, lastName: lastName, dob: dob, address: address};
+        } else {
+            return null;
+        }
+    }
+
+    req.getProfileInformation = function() {
         /* Get the request body and check it contains
             -   firstName
             -   lastName
@@ -86,8 +101,31 @@ function requestMiddleware(req, res, next) {
         }
     }
 
-    req.hasBearerToken = function() {
+    req.hasAuthHeader = function() {
         // Check the request headers for an Authorization field
+
+        let authHeader = req.getHeaderWithName('Authorization');
+
+        if (authHeader == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    req.bearerTokenHasExpired = function() {
+        // Check if the JWT bearer token has expired
+
+        return false;
+    }
+
+    req.hasValidBearerToken = function() {
+        // Check if the JWT bearer token is valid
+
+        return true;
+    }
+    req.authTypeIsBearer = function() {
+        // Check if the auth type is bearer
 
         let authHeader = req.getHeaderWithName('Authorization');
         if (authHeader == null) {
@@ -99,17 +137,8 @@ function requestMiddleware(req, res, next) {
         } else {
             return false;
         }
-    }
 
-    req.hasValidBearerToken = function() {
-        // Check the request headers for an Authorization field
-        if (req.hasBearerToken() == false) {
-            return false;
-        }
 
-        let authHeader = req.getHeaderWithName('Authorization');
-
-        return true;
     }
 
     

@@ -71,8 +71,18 @@ router.param("email", async (req, res, next, email) => {
 router.route("/:email/profile")
     .get( (req, res) => {
 
-        if (req.hasBearerToken() && !req.hasValidBearerToken()) {
+        if (req.authTypeIsBearer() && req.bearerTokenHasExpired()) {
             res.sendUnauthorised("JWT token has expired");
+            return;
+        }
+
+        if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
+            res.sendUnauthorised("Invalid JWT token");
+            return;
+        }
+
+        if (!req.authTypeIsBearer) {
+            res.sendUnauthorised("Authorization header is malformed");
             return;
         }
 
@@ -95,7 +105,16 @@ router.route("/:email/profile")
         res.sendSuccess(profile);
 
     })
-    .put((req, res) => {})
+    .put((req, res) => {
+
+        if (!req.hasBearerToken()) {
+            res.sendUnauthorised("Authorization header ('Bearer token') not found");
+            return;
+        }
+
+
+
+    })
     .delete((req, res) => {});
 
 
