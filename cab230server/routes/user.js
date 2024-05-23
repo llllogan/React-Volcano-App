@@ -72,13 +72,13 @@ router.param("email", async (req, res, next, email) => {
 router.route("/:email/profile")
     .get( (req, res) => {
 
-        if (req.authTypeIsBearer() && req.bearerTokenHasExpired()) {
-            res.sendUnauthorised("JWT token has expired");
+        if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
+            res.sendUnauthorised("Invalid JWT token");
             return;
         }
 
-        if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
-            res.sendUnauthorised("Invalid JWT token");
+        if (req.authTypeIsBearer() && req.bearerTokenHasExpired()) {
+            res.sendUnauthorised("JWT token has expired");
             return;
         }
 
@@ -113,13 +113,13 @@ router.route("/:email/profile")
             return;
         }
 
-        if (req.authTypeIsBearer() && req.bearerTokenHasExpired()) {
-            res.sendUnauthorised("JWT token has expired");
+        if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
+            res.sendUnauthorised("Invalid JWT token");
             return;
         }
 
-        if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
-            res.sendUnauthorised("Invalid JWT token");
+        if (req.authTypeIsBearer() && req.bearerTokenHasExpired()) {
+            res.sendUnauthorised("JWT token has expired");
             return;
         }
 
@@ -127,8 +127,6 @@ router.route("/:email/profile")
             res.sendUnauthorised("Authorization header is malformed");
             return;
         }
-
-
 
     })
     .delete((req, res) => {});

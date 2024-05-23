@@ -11,7 +11,7 @@ const tokenMiddleware = (req, res, next) => {
             email: username
         }
 
-        const token = jwt.sign(payload, secretKey, {expiresIn: '24h'});
+        const token = jwt.sign(payload, secretKey, {expiresIn: '1s'});
         return token;
     }
 
@@ -21,9 +21,17 @@ const tokenMiddleware = (req, res, next) => {
         const token = fullToken.split(' ')[1];
 
         return jwt.verify(token, secretKey, (err, decodedPayload) => {
-            if (err) {
-                return null
+            if (err.expiredAt) {
+                // If the token has expired
+                return payload = {
+                    isExpired: true,
+                    expiredAt: err.expiredAt
+                }
+            } else if(err) {
+                // If there is an issue with the token
+                return null;
             } else {
+                // If the token is valid and currect
                 return decodedPayload;
             }
         });
@@ -51,16 +59,16 @@ const tokenMiddleware = (req, res, next) => {
 
     req.hasValidBearerToken = function() {
         let decodedPayload = req.decodeBearerToken();
-        if (decodedPayload != null) {
-            return true;
-        } else {
+        if (decodedPayload == null) {
             return false;
+        } else {
+            return true;
         }
     }
 
     req.bearerTokenHasExpired = function() {
         let decodedPayload = req.decodeBearerToken();
-        if (decodedPayload == null) {
+        if (decodedPayload.isExpired) {
             return true;
         } else {
             return false;
