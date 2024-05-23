@@ -3,12 +3,14 @@ const bodyParser = require("body-parser");
 const dbClient = require("./middleware/dbMiddleware");
 const requestMiddleware = require("./middleware/requestMiddleware");
 const responseMethods = require("./middleware/responseMiddleware");
+const tokenMiddleware = require("./middleware/tokenMiddleware");
 
 const app = express();
 app.use(bodyParser.json());
 app.use(dbClient);
 app.use(requestMiddleware);
 app.use(responseMethods);
+app.use(tokenMiddleware);
 
 app.get("/", (req, res) => {
 
