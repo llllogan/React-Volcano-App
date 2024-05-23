@@ -5,6 +5,8 @@ const requestMiddleware = require("./middleware/requestMiddleware");
 const responseMethods = require("./middleware/responseMiddleware");
 const tokenMiddleware = require("./middleware/tokenMiddleware");
 
+require('dotenv').config();
+
 const app = express();
 app.use(bodyParser.json());
 app.use(dbClient);
