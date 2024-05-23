@@ -124,6 +124,7 @@ function requestMiddleware(req, res, next) {
 
         return true;
     }
+
     req.authTypeIsBearer = function() {
         // Check if the auth type is bearer
 
@@ -137,12 +138,17 @@ function requestMiddleware(req, res, next) {
         } else {
             return false;
         }
-
-
     }
 
-    
-    
+    req.decodeBearerToken = function() {
+        // Decode the JWT bearer token
+
+        const fullToken = req.getHeaderWithName('Authorization');
+        const token = fullToken.split(' ')[1];
+
+        
+    }
+
     next()
 }
 

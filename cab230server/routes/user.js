@@ -81,7 +81,7 @@ router.route("/:email/profile")
             return;
         }
 
-        if (!req.authTypeIsBearer) {
+        if (req.hasAuthHeader() && !req.authTypeIsBearer()) {
             res.sendUnauthorised("Authorization header is malformed");
             return;
         }
@@ -107,8 +107,23 @@ router.route("/:email/profile")
     })
     .put((req, res) => {
 
-        if (!req.hasBearerToken()) {
+        if (!req.hasAuthHeader()) {
             res.sendUnauthorised("Authorization header ('Bearer token') not found");
+            return;
+        }
+
+        if (req.authTypeIsBearer() && req.bearerTokenHasExpired()) {
+            res.sendUnauthorised("JWT token has expired");
+            return;
+        }
+
+        if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
+            res.sendUnauthorised("Invalid JWT token");
+            return;
+        }
+
+        if (req.hasAuthHeader() && !req.authTypeIsBearer()) {
+            res.sendUnauthorised("Authorization header is malformed");
             return;
         }
 
