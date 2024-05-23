@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const dbClient = require("./middleware/dbMiddleware");
 const requestMiddleware = require("./middleware/requestMiddleware");
 const responseMethods = require("./middleware/responseMiddleware");
-const tokenMiddleware = require("./middleware/tokenMiddleware");
+const tokenMiddleware = require("./middleware/authMiddleware");
 
 require('dotenv').config();
 
