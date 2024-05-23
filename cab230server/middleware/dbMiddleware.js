@@ -1,4 +1,4 @@
-const dbClient = require('../dbInterface');
+const dbClient = require('../dbClient');
 
 const dbMiddleware = (req, res, next) => {
     req.db = dbClient;

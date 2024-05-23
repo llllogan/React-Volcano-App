@@ -106,6 +106,10 @@ class DbClient {
     async createUser(email, password) {
         await knex('users').insert({email: email, password: password});
     }
+
+    async updateUser(id, email, firstName, lastName, dob, address) {
+        await knex('users').where('id', id).update({email: email, firstName: firstName, lastName: lastName, dob: dob, address: address});
+    }
 }
 
 

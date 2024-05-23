@@ -106,7 +106,7 @@ router.route("/:email/profile")
         res.sendSuccess(profile);
 
     })
-    .put((req, res) => {
+    .put( async (req, res) => {
 
         if (!req.hasAuthHeader()) {
             res.sendUnauthorised("Authorization header ('Bearer token') not found");
@@ -128,8 +128,32 @@ router.route("/:email/profile")
             return;
         }
 
-        console.log(req.bearerToken);
+        if (req.existingUser == null) {
+            res.sendNotFound("User not found");
+        }
 
+        if (req.existingUser.id != req.bearerToken.id) {
+            res.sendForbidden("Forbidden");
+        }
+
+        if (req.getProfileInformation() == null) {
+            res.sendError("Request body incomplete: firstName, lastName, dob and address are required.");
+        }
+
+        const updatedInformation = req.getProfileInformation();
+
+        await req.db.updateUser(req.existingUser.id, req.existingUser.email, updatedInformation.firstName, updatedInformation.lastName, updatedInformation.dob, updatedInformation.address);
+
+        const updatedUser = await req.db.getUserByEmail(req.existingUser.email);
+        const payload = {
+            email: updatedUser.email,
+            firstName: updatedUser.firstName,
+            lastName: updatedUser.lastName,
+            dob: updatedUser.dob,
+            address: updatedUser.address
+        }
+
+        res.sendSuccess(payload);
     })
     .delete((req, res) => {});
 
