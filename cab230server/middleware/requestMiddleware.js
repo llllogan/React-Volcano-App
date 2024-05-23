@@ -140,15 +140,6 @@ function requestMiddleware(req, res, next) {
         }
     }
 
-    req.decodeBearerToken = function() {
-        // Decode the JWT bearer token
-
-        const fullToken = req.getHeaderWithName('Authorization');
-        const token = fullToken.split(' ')[1];
-
-        
-    }
-
     next()
 }
 

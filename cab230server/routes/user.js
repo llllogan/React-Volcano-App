@@ -5,12 +5,18 @@ router.use(hashMiddleware);
 
 router.post("/register", async (req, res) => {
 
+    console.log("Registering user");
+
     const user = req.getEmailAndPassword();
+
+    console.log("0");
 
     if (user == null || !user.email.includes("@")) {
         res.sendError("Request body incomplete, both email and password are required");
         return;
     }
+
+    console.log("1");
 
     const existingUser = await req.db.getUserByEmail(user.email);
 
@@ -49,8 +55,10 @@ router.post("/login", async (req, res) => {
         return;
     }
 
+    const bearerToken = req.makeBearerToken(existingUser.id, existingUser.email);
+
     let tokenResponse = {
-        token: "Bearer token",
+        token: bearerToken,
         token_type: "Bearer",
         expires_in: 86400
     }
