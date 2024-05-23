@@ -128,6 +128,8 @@ router.route("/:email/profile")
             return;
         }
 
+        console.log(req.bearerToken);
+
     })
     .delete((req, res) => {});
 

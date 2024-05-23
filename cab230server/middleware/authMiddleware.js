@@ -11,7 +11,7 @@ const tokenMiddleware = (req, res, next) => {
             email: username
         }
 
-        const token = jwt.sign(payload, secretKey, {expiresIn: '1s'});
+        const token = jwt.sign(payload, secretKey, {expiresIn: '24h'});
         return token;
     }
 
@@ -21,19 +21,23 @@ const tokenMiddleware = (req, res, next) => {
         const token = fullToken.split(' ')[1];
 
         return jwt.verify(token, secretKey, (err, decodedPayload) => {
-            if (err.expiredAt) {
-                // If the token has expired
-                return payload = {
-                    isExpired: true,
-                    expiredAt: err.expiredAt
+
+            if (err) {
+                let expiredAt = err.expiredAt;
+
+                if (expiredAt) {
+                    // If the token has expired
+                    return payload = {
+                        isExpired: true,
+                        expiredAt: err.expiredAt
+                    }
+                } else {
+                    // If there is an issue with the token
+                    return null;
                 }
-            } else if(err) {
-                // If there is an issue with the token
-                return null;
-            } else {
-                // If the token is valid and currect
-                return decodedPayload;
             }
+
+            return decodedPayload;
         });
     }
 
@@ -49,6 +53,10 @@ const tokenMiddleware = (req, res, next) => {
 
     // Check if the Authorization header is a Bearer token
     req.authTypeIsBearer = function() {
+        if (!req.hasAuthHeader()) {
+            return false;
+        }
+
         let authHeader = req.getHeaderWithName('Authorization');
         if (authHeader.toLowerCase().includes('bearer')) {
             return true;
@@ -73,6 +81,10 @@ const tokenMiddleware = (req, res, next) => {
         } else {
             return false;
         }
+    }
+
+    if (req.authTypeIsBearer() && req.hasValidBearerToken()) {
+        req.bearerToken = decodedPayload = req.decodeBearerToken();
     }
 
     next();
