@@ -3,7 +3,6 @@ const router = express.Router();
 
 router.param("id", async (req, res, next, id) => {
 
-    console.log("Trying to find volcano with id of: " + id)
     let volcano = await req.db.getVolcanoById(id);
     req.volcano = volcano;
     next();
@@ -36,7 +35,27 @@ router.get("/:id", async (req, res) => {
         return;
     }
 
-    res.sendSuccess(data);
+    let payload = {
+        id: req.volcano.id,
+        name: req.volcano.name,
+        country: req.volcano.country,
+        region: req.volcano.region,
+        subregion: req.volcano.subregion,
+        last_eruption: req.volcano.last_eruption,
+        summit: req.volcano.summit,
+        elevation: req.volcano.elevation,
+        latitude: req.volcano.latitude,
+        longitude: req.volcano.longitude,
+    }
+
+    if (req.hasValidBearerToken() && !req.bearerTokenHasExpired()) {
+        payload.population_5km = req.volcano.population_5km;
+        payload.population_10km = req.volcano.population_10km;
+        payload.population_30km = req.volcano.population_30km;
+        payload.population_100km = req.volcano.population_100km;
+    }
+
+    res.sendSuccess(payload);
 });
 
 router.route("/:id/eruptions")
@@ -47,13 +66,5 @@ router.route("/:id/eruptions")
 router.route("/:id/reviews")
     .get((req, res) => {})
     .post((req, res) => {});
-
-router.param("id", (req, res, next, id) => {
-    console.log("Trying to find volcano with id of: " + id)
-    req.id = id;
-    next();
-});
-
-
 
 module.exports = router;

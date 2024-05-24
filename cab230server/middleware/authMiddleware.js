@@ -66,6 +66,11 @@ const tokenMiddleware = (req, res, next) => {
     }
 
     req.hasValidBearerToken = function() {
+
+        if (req.authTypeIsBearer() == false) {
+            return false;
+        }
+
         let decodedPayload = req.decodeBearerToken();
         if (decodedPayload == null) {
             return false;
