@@ -3,8 +3,18 @@ const router = express.Router();
 
 router.get("/:id", async (req, res) => {
 
-    if (req.hasBearerToken() && !req.hasValidBearerToken()) {
+    if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
+        res.sendUnauthorised("Invalid JWT token");
+        return;
+    }
+
+    if (req.authTypeIsBearer() && req.bearerTokenHasExpired()) {
         res.sendUnauthorised("JWT token has expired");
+        return;
+    }
+
+    if (req.hasAuthHeader() && !req.authTypeIsBearer()) {
+        res.sendUnauthorised("Authorization header is malformed");
         return;
     }
 
