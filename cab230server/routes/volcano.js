@@ -1,6 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
+router.param("id", async (req, res, next, id) => {
+
+    console.log("Trying to find volcano with id of: " + id)
+    let volcano = await req.db.getVolcanoById(id);
+    req.volcano = volcano;
+    next();
+});
+
 router.get("/:id", async (req, res) => {
 
     if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
@@ -18,11 +26,13 @@ router.get("/:id", async (req, res) => {
         return;
     }
 
-    const id = req.params.id;
-    const data = await req.db.getVolcanoById(id);
+    if (req.getQueryParams() != null) {
+        res.sendBadRequest("Invalid query parameters. Query parameters are not permitted.");
+        return;
+    }
 
-    if (data == null) {
-        res.sendNotFound("Volcano with ID: " + id + " not found.");
+    if (req.volcano == null) {
+        res.sendError("Volcano with ID: " + id + " not found.");
         return;
     }
 
