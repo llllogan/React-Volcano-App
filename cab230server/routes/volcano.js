@@ -59,12 +59,38 @@ router.get("/:id", async (req, res) => {
 });
 
 router.route("/:id/eruptions")
-    .get((req, res) => {})
+    .get((req, res) => {
+        
+        if (req.volcano == null) {
+            res.sendError("Volcano with ID: " + id + " not found.");
+            return;
+        }
+
+
+
+
+    })
     .post((req, res) => {});
 
 
 router.route("/:id/reviews")
-    .get((req, res) => {})
-    .post((req, res) => {});
+    .get( async (req, res) => {
+
+        if (req.volcano == null) {
+            res.sendError("Volcano with ID: " + id + " not found.");
+            return;
+        }
+
+        let reviews = await req.db.getReviewsForVolcano(req.volcano.id);
+
+        res.sendSuccess(reviews);
+    })
+    .post((req, res) => {
+
+        
+
+
+
+    });
 
 module.exports = router;

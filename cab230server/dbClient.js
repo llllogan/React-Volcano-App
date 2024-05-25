@@ -94,6 +94,25 @@ class DbClient {
         }
     }
 
+    async getReviewsForVolcano(id) {
+        let reviews = [];
+        let response = await knex.select().from('reviews').where('volcanoId', id);
+
+        response.forEach((row) => {
+            let review = {
+                id: row.id,
+                userId: row.userId,
+                title: row.title,
+                rating: row.rating,
+                comment: row.description
+            }
+
+            reviews.push(review);
+        });
+
+        return reviews;
+    }
+
     async getUserByEmail(email) {
         let response = await knex.select().from('users').where('email', email);
         if (response.length == 0) {
