@@ -111,10 +111,32 @@ class DbClient {
         return reviews;
     }
 
+    async getVolcanoReviewById(reviewId) {
+        let response = await knex.select().from('reviews').where('id', reviewId);
+        if (response.length == 0) {
+            return null;
+        } else {
+            return response[0];
+        }
+    }
+
 
     async addReiviewForVolcano(userId, volcanoId, title, rating, comment) {
         try {
             await knex('reviews').insert({volcanoId: volcanoId, userId: userId, title: title, rating: rating, description: comment});
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async updateFieldOfVolcanoReview(id, key, value) {
+
+        if (key == 'comment') {
+            key = 'description';
+        }
+
+        try {
+            await knex('reviews').where('id', id).update(key, value);
         } catch (error) {
             return error;
         }

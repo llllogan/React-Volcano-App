@@ -105,6 +105,38 @@ function requestMiddleware(req, res, next) {
         }
     }
 
+    req.getPartialReviewFromBody = function() {
+        // Get the request body and check it contains
+        // -   id
+        // -   title
+        // -   rating
+        // -   comment
+        // Return an object with these fields
+        // If any of these fields are not found, return null
+
+        let id = req.body.id;
+        let title = req.body.title;
+        let rating = req.body.rating;
+        let comment = req.body.comment;
+
+        if (id == null) {
+            return null;
+        }
+
+        payload = {id: id};
+        if (title) {
+            payload.title = title;
+        }
+        if (rating) {
+            payload.rating = rating;
+        }
+        if (comment) {
+            payload.comment = comment;
+        }
+
+        return payload;
+    }
+
     next()
 }
 

@@ -135,8 +135,63 @@ router.route("/:id/reviews")
         }
         res.sendSuccess(review);
 
-    }).put((req, res) => {
+    }).put( async (req, res) => {
         
+        if (!req.hasAuthHeader()) {
+            res.sendUnauthorised("Authorization header ('Bearer token') not found");
+            return;
+        }
+
+        if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
+            res.sendUnauthorised("Invalid JWT token");
+            return;
+        }
+    
+        if (req.authTypeIsBearer() && req.bearerTokenHasExpired()) {
+            res.sendUnauthorised("JWT token has expired");
+            return;
+        }
+    
+        if (req.hasAuthHeader() && !req.authTypeIsBearer()) {
+            res.sendUnauthorised("Authorization header is malformed");
+            return;
+        }
+
+        let review = req.getPartialReviewFromBody();
+
+        if (review == null) {
+            res.sendBadRequest("Review is missing id field");
+            return;
+        }
+
+        let existingReview = await req.db.getVolcanoReviewById(req.body.id);
+
+        if (existingReview == null) {
+            res.sendError("Review with ID: " + req.body.id + " not found");
+            return;
+        }
+
+        if (existingReview.userId != req.bearerToken.id) {
+            res.sendForbidden("Forbidden");
+            return;
+        }
+
+        delete review.id;
+
+        for (const [key, value] of Object.entries(review)) {
+            const error = await req.db.updateFieldOfVolcanoReview(existingReview.id, key, value);
+
+            if (error) {
+                res.sendError("SQL error. Please check payload");
+                return;
+            }
+        }
+
+        review.id = existingReview.id;
+        review.userId = existingReview.userId;
+        review.volcanoId = existingReview.volcanoId;
+
+        res.sendSuccess(review);
         
     });
 
