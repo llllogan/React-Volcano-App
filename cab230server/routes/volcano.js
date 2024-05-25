@@ -10,6 +10,11 @@ router.param("id", async (req, res, next, id) => {
 
 router.get("/:id", async (req, res) => {
 
+    if (!req.hasAuthHeader()) {
+        res.sendUnauthorised("Authorization header ('Bearer token') not found");
+        return;
+    }
+
     if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
         res.sendUnauthorised("Invalid JWT token");
         return;
@@ -85,12 +90,54 @@ router.route("/:id/reviews")
 
         res.sendSuccess(reviews);
     })
-    .post((req, res) => {
+    .post( async (req, res) => {
 
+        if (!req.hasAuthHeader()) {
+            res.sendUnauthorised("Authorization header ('Bearer token') not found");
+            return;
+        }
+
+        if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
+            res.sendUnauthorised("Invalid JWT token");
+            return;
+        }
+    
+        if (req.authTypeIsBearer() && req.bearerTokenHasExpired()) {
+            res.sendUnauthorised("JWT token has expired");
+            return;
+        }
+    
+        if (req.hasAuthHeader() && !req.authTypeIsBearer()) {
+            res.sendUnauthorised("Authorization header is malformed");
+            return;
+        }
+
+        if (req.volcano == null) {
+            res.sendError("Volcano with ID: " + id + " not found.");
+            return;
+        }
+
+        let review = req.getVolcanoReviewFromBody();
+
+        if (review == null) {
+            res.sendBadRequest("Review is missing required fields");
+            return;
+        }
+
+        review.volcanoId = req.volcano.id;
+        review.userId = req.bearerToken.id;
+
+        const error = await req.db.addReiviewForVolcano(review.userId, review.volcanoId, review.title, review.rating, review.comment);
+
+        if (error) {
+            res.sendError("SQL error. Please check payload");
+            return;
+        }
+        res.sendSuccess("Review added successfully");
+
+    }).put((req, res) => {
         
-
-
-
+        
     });
 
 module.exports = router;

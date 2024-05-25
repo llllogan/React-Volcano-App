@@ -86,6 +86,25 @@ function requestMiddleware(req, res, next) {
         }
     }
 
+    req.getVolcanoReviewFromBody = function() {
+        // Get the request body and check it contains
+        // -   title
+        // -   rating
+        // -   comment
+        // Return an object with these fields
+        // If any of these fields are not found, return null
+
+        let title = req.body.title;
+        let rating = req.body.rating;
+        let comment = req.body.comment;
+
+        if (title && rating && comment) {
+            return {title: title, rating: rating, comment: comment};
+        } else {
+            return null;
+        }
+    }
+
     next()
 }
 

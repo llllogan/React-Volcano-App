@@ -113,6 +113,14 @@ class DbClient {
         return reviews;
     }
 
+    async addReiviewForVolcano(userId, volcanoId, title, rating, comment) {
+        try {
+            await knex('reviews').insert({volcanoId: volcanoId, userId: userId, title: title, rating: rating, description: comment});
+        } catch(error) {
+            return error.sqlMessage;
+        }
+    }
+
     async getUserByEmail(email) {
         let response = await knex.select().from('users').where('email', email);
         if (response.length == 0) {
