@@ -1,6 +1,4 @@
-const environment = process.env.NODE_ENV || 'development';
-
-const config = require('./knexfile')[environment];
+const config = require('./knexfile')['development'];
 const knex = require('knex')(config);
 
 class DbClient {
@@ -113,11 +111,12 @@ class DbClient {
         return reviews;
     }
 
+
     async addReiviewForVolcano(userId, volcanoId, title, rating, comment) {
         try {
             await knex('reviews').insert({volcanoId: volcanoId, userId: userId, title: title, rating: rating, description: comment});
-        } catch(error) {
-            return error.sqlMessage;
+        } catch (error) {
+            return error;
         }
     }
 

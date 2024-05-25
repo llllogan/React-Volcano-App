@@ -3,7 +3,10 @@
     "devStart": "nodemon server.js"
   },
   "dependencies": {
+    "@babel/cli": "^7.24.6",
+    "@babel/core": "^7.24.6",
     "@babel/plugin-proposal-decorators": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",

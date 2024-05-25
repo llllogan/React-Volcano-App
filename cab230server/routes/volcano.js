@@ -133,7 +133,7 @@ router.route("/:id/reviews")
             res.sendError("SQL error. Please check payload");
             return;
         }
-        res.sendSuccess("Review added successfully");
+        res.sendSuccess(review);
 
     }).put((req, res) => {
         
