@@ -63,20 +63,6 @@ router.get("/:id", async (req, res) => {
     res.sendSuccess(payload);
 });
 
-router.route("/:id/eruptions")
-    .get((req, res) => {
-        
-        if (req.volcano == null) {
-            res.sendError("Volcano with ID: " + id + " not found.");
-            return;
-        }
-
-
-
-
-    })
-    .post((req, res) => {});
-
 
 router.route("/:id/reviews")
     .get( async (req, res) => {
