@@ -12,6 +12,14 @@ function requestMiddleware(req, res, next) {
         }
     }
 
+    req.getQueryParamsLength = function() {
+        // Return the number of query parameters
+        // Return 0 if there isnt any
+
+        let queryParams = req.query;
+        return Object.keys(queryParams).length;
+    }
+
     req.getQueryParamWithName = function(name) {
         // Return the value of the query parameter with the given name
         // Return null if there isnt any

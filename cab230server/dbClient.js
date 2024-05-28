@@ -17,6 +17,17 @@ class DbClient {
         return countries;
     }
 
+    async getCountriesByFilter(filter, value) {
+        let countries = [];
+        let response = await knex.select().distinct('country').from('data').where(filter, value);
+
+        response.forEach((row) => {
+            countries.push(row.country);
+        });
+
+        return countries;
+    }
+
     async getVolcanoesInCountry(country) {
         let volcanoes = [];
         let response = await knex.select().from('data').where('country', country);
