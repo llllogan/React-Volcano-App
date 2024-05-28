@@ -17,10 +17,17 @@ class DbClient {
         return countries;
     }
 
-    async getCountriesByFilter(filter, value) {
+    async getCountriesByFilter(filter, value, exactMatch) {
         let countries = [];
-        let response = await knex.select().distinct('country').from('data').where(filter, value);
+        let response = null;
 
+        if (exactMatch) {
+            response = await knex.select().distinct('country').from('data').where(filter, value);
+
+        } else {
+            response = await knex.select().distinct('country').from('data').where(filter, 'like', `%${value}%`);
+        }
+        
         response.forEach((row) => {
             countries.push(row.country);
         });

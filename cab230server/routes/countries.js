@@ -19,23 +19,24 @@ router.get("/filter", async (req, res) => {
 
     let queryParamKey = null;
     let queryParamValue = null;
+    let exactMatch = false;
 
-    if (req.getQueryParamsLength() > 1) 
+    if (req.getQueryParamsLength() > 1 && req.getQueryParamWithName("exactMatch") == null) 
     {
-        res.sendError("Please supply only one query parameter.");
+        res.sendError("Please supply only one query parameter with an option 'exactMatch' flag.");
         return;
     }
 
-    if (req.getQueryParamWithName("name") == null && req.getQueryParamWithName("region") == null && req.getQueryParamWithName("subregion") == null)
+    if (req.getQueryParamWithName("volcano") == null && req.getQueryParamWithName("region") == null && req.getQueryParamWithName("subregion") == null && req.getQueryParamWithName("name") == null)
     {
-        res.sendError("Please supply a valid query parameter (name, region, subregion).");
+        res.sendError("Please supply a valid query parameter (name, volcano, region, subregion).");
         return;
     }
 
-    if (req.getQueryParamWithName("name") != null)
+    if (req.getQueryParamWithName("volcano") != null)
     {
         queryParamKey = "name";
-        queryParamValue = req.getQueryParamWithName("name");
+        queryParamValue = req.getQueryParamWithName("volcano");
     }
 
     if (req.getQueryParamWithName("region") != null)
@@ -50,7 +51,19 @@ router.get("/filter", async (req, res) => {
         queryParamValue = req.getQueryParamWithName("subregion");
     }
 
-    const data = await req.db.getCountriesByFilter(queryParamKey, queryParamValue);
+    if (req.getQueryParamWithName("name") != null)
+    {
+        queryParamKey = "country";
+        queryParamValue = req.getQueryParamWithName("name");
+    
+    }
+
+    if (req.getQueryParamWithName("exactMatch") == "true")
+    {
+        exactMatch = true;
+    }
+
+    const data = await req.db.getCountriesByFilter(queryParamKey, queryParamValue, exactMatch);
     res.sendSuccess(data);
 });
 
