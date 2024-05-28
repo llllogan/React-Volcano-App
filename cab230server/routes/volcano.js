@@ -119,7 +119,7 @@ router.route("/:id/reviews")
             res.sendError("SQL error. Please check payload");
             return;
         }
-        res.sendSuccess(review);
+        res.sendCreated(review);
 
     }).put( async (req, res) => {
         
