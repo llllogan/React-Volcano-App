@@ -120,7 +120,8 @@ class DbClient {
                 userId: row.userId,
                 title: row.title,
                 rating: row.rating,
-                comment: row.description
+                comment: row.description,
+                date: row.date
             }
 
             reviews.push(review);
@@ -140,8 +141,11 @@ class DbClient {
 
 
     async addReiviewForVolcano(userId, volcanoId, title, rating, comment) {
+        // Get the current date in a format for SQL
+        const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        console.log(currentDateTime);
         try {
-            await knex('reviews').insert({volcanoId: volcanoId, userId: userId, title: title, rating: rating, description: comment});
+            await knex('reviews').insert({volcanoId: volcanoId, userId: userId, title: title, rating: rating, description: comment, date: currentDateTime});
         } catch (error) {
             return error;
         }

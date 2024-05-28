@@ -106,7 +106,7 @@ router.route("/:id/reviews")
         let review = req.getVolcanoReviewFromBody();
 
         if (review == null) {
-            res.sendBadRequest("Review is missing required fields");
+            res.sendError("Review is missing required fields");
             return;
         }
 
@@ -146,7 +146,7 @@ router.route("/:id/reviews")
         let review = req.getPartialReviewFromBody();
 
         if (review == null) {
-            res.sendBadRequest("Review is missing id field");
+            res.sendError("Review is missing id field");
             return;
         }
 
