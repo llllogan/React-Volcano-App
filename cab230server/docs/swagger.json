@@ -738,7 +738,7 @@
       "put": {
         "summary": "New! - with path parameter",
         "tags": ["Volcano"],
-        "description": "Updates a review for the queried volcano. The path parameter (id) is required. A request body containing the updated to the review must be sent along with the . This route requires the user to be authenticated - a valid JWT token must be sent in the header of the request. To test this route using Swagger, click the green 'Authorize' button at the top of this page to enter your JWT token. A JWT token can be obtained by logging in.",
+        "description": "Updates a review for the queried volcano. Both the (ID) and (reviewID) path parameters are required, both have to be valid and the review must have been placed against that volcano. A request body containing the updates to the review must be supplied. This route requires the user to be authenticated - a valid JWT token must be sent in the header of the request. The user who originally created the review must be the one to edit it, all requests made by other users will be forbidden. To test this route using Swagger, click the green 'Authorize' button at the top of this page to enter your JWT token. A JWT token can be obtained by logging in.",
         "parameters": [
           {
             "name": "id",

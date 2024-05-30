@@ -165,6 +165,11 @@ router.put("/:id/reviews/:reviewId", async (req, res) => {
         return;
     }
 
+    if (req.existingReview.volcanoId != req.volcano.id) {
+        res.sendError("Review with ID: " + req.reviewId + " does not belong to volcano with ID: " + req.volcano.id);
+        return;
+    }
+
     if (req.existingReview.userId != req.bearerToken.id) {
         res.sendForbidden("Forbidden");
         return;
