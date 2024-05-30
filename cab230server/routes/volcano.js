@@ -39,12 +39,12 @@ router.get("/:id", async (req, res) => {
     }
 
     if (req.getQueryParams() != null) {
-        res.sendBadRequest("Invalid query parameters. Query parameters are not permitted.");
+        res.sendError("Invalid query parameters. Query parameters are not permitted.");
         return;
     }
 
     if (req.volcano == null) {
-        res.sendError("Volcano with ID: " + id + " not found.");
+        res.sendNotFound("Volcano with ID: " + id + " not found.");
         return;
     }
 
@@ -76,7 +76,7 @@ router.route("/:id/reviews")
     .get( async (req, res) => {
 
         if (req.volcano == null) {
-            res.sendError("Volcano with ID: " + id + " not found.");
+            res.sendError("");
             return;
         }
 
@@ -107,7 +107,7 @@ router.route("/:id/reviews")
         }
 
         if (req.volcano == null) {
-            res.sendError("Volcano with ID: " + id + " not found.");
+            res.sendNotFound("Volcano with ID: " + id + " not found.");
             return;
         }
 
@@ -161,12 +161,12 @@ router.put("/:id/reviews/:reviewId", async (req, res) => {
     }
 
     if (req.existingReview == null) {
-        res.sendError("Review with ID: " + req.reviewId + " not found");
+        res.sendNotFound("Review with ID: " + req.reviewId + " not found");
         return;
     }
 
     if (req.existingReview.volcanoId != req.volcano.id) {
-        res.sendError("Review with ID: " + req.reviewId + " does not belong to volcano with ID: " + req.volcano.id);
+        res.sendNotFound("Review with ID: " + req.reviewId + " does not belong to volcano with ID: " + req.volcano.id);
         return;
     }
 
