@@ -155,7 +155,6 @@ router.route("/:email/profile")
 
         res.sendSuccess(payload);
     })
-    .delete((req, res) => {});
 
 
 
