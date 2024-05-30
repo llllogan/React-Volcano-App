@@ -122,24 +122,29 @@ function requestMiddleware(req, res, next) {
         // Return an object with these fields
         // If any of these fields are not found, return null
 
-        let id = req.body.id;
+        let hasValidFields = false;
+
         let title = req.body.title;
         let rating = req.body.rating;
         let comment = req.body.comment;
 
-        if (id == null) {
-            return null;
-        }
+        let payload = {};
 
-        payload = {id: id};
         if (title) {
             payload.title = title;
+            hasValidFields = true;
         }
         if (rating) {
             payload.rating = rating;
+            hasValidFields = true;
         }
         if (comment) {
             payload.comment = comment;
+            hasValidFields = true;
+        }
+
+        if (!hasValidFields) {
+            return null;
         }
 
         return payload;

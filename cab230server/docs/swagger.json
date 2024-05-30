@@ -292,7 +292,7 @@
       "/countries/filter": {
         "get": {
           "tags": ["Country"],
-          "summary": "New!",
+          "summary": "New! - with query parameter",
           "description": "Returns a subset of the list of countries, filtered by the query parameter. The query parameter can be any of the following: volcano, region, subregion, name. With an option paramater of exactMatch which is optional and defaults to false. If exactMatch is set to true, the search will look for exact matches. If exactMatch is set to false, the search will look for fuzzy matches. If no query parameters are supplied, the route will return the full list of countries.",
           "parameters": [
             {
@@ -579,6 +579,7 @@
       },
       "/volcano/{id}/reviews": {
         "get": {
+          "summary": "New! - with path parameter",
           "tags": ["Volcano"],
           "description": "Returns an array of reviews for the queried volcano. The path parameter (id) is required.",
           "parameters": [
@@ -649,6 +650,7 @@
           }
         },
         "post": {
+          "summary": "New! - with path parameter",
           "tags": ["Volcano"],
           "description": "Creates a new review for the queried volcano. The path parameter (id) is required. A request body containing the review to be created must be sent. This route requires the user to be authenticated - a valid JWT token must be sent in the header of the request. To test this route using Swagger, click the green 'Authorize' button at the top of this page to enter your JWT token. A JWT token can be obtained by logging in.",
           "parameters": [
@@ -732,8 +734,9 @@
           } 
         },
         "put": {
+          "summary": "New! - with path parameter",
           "tags": ["Volcano"],
-          "description": "Updates a review for the queried volcano. The path parameter (id) is required. A request body containing the review to be updated must be sent. This route requires the user to be authenticated - a valid JWT token must be sent in the header of the request. To test this route using Swagger, click the green 'Authorize' button at the top of this page to enter your JWT token. A JWT token can be obtained by logging in.",
+          "description": "Updates a review for the queried volcano. The path parameter (id) is required. A request body containing the updated to the review must be sent along with the . This route requires the user to be authenticated - a valid JWT token must be sent in the header of the request. To test this route using Swagger, click the green 'Authorize' button at the top of this page to enter your JWT token. A JWT token can be obtained by logging in.",
           "parameters": [
             {
               "name": "id",
