@@ -33,5 +33,11 @@ app.use("/user", userRouter);
 app.use("/countries", countriesRouter);
 
 
+app.get("/brewcoffee", (req, res) => {
+    res.sendIAmATeaPot();
+    return;
+});
+
+
 app.listen(3000);
 

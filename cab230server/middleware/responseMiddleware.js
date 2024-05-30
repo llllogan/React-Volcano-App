@@ -35,6 +35,11 @@ function responseMiddleware(req, res, next) {
         res.json({message: message});
     }
 
+    res.sendIAmATeaPot = function() {
+        res.statusCode = 418;
+        res.json({error: true, message: "I cannot brew coffee as I am a teapot.", link: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/418"});
+    }
+
     next();
 }
 
