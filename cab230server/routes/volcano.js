@@ -156,7 +156,7 @@ router.put("/:id/reviews/:reviewId", async (req, res) => {
     let review = req.getPartialReviewFromBody();
 
     if (review == null) {
-        res.sendError("Review is at least one required field");
+        res.sendError("Review update payload must have at least one field.");
         return;
     }
 
