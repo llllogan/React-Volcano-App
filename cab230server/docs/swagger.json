@@ -292,6 +292,8 @@
       "/countries/filter": {
         "get": {
           "tags": ["Country"],
+          "summary": "New!",
+          "description": "Returns a subset of the list of countries, filtered by the query parameter. The query parameter can be any of the following: volcano, region, subregion, name. With an option paramater of exactMatch which is optional and defaults to false. If exactMatch is set to true, the search will look for exact matches. If exactMatch is set to false, the search will look for fuzzy matches. If no query parameters are supplied, the route will return the full list of countries.",
           "parameters": [
             {
               "name": "volcano",

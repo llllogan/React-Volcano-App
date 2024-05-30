@@ -5,6 +5,9 @@ const requestMiddleware = require("./middleware/requestMiddleware");
 const responseMethods = require("./middleware/responseMiddleware");
 const tokenMiddleware = require("./middleware/authMiddleware");
 
+const swaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("./docs/swagger.json");
+
 require('dotenv').config();
 
 const app = express();
@@ -14,10 +17,8 @@ app.use(requestMiddleware);
 app.use(responseMethods);
 app.use(tokenMiddleware);
 
-app.get("/", (req, res) => {
-
-    res.send("Hello World");
-})
+app.use("/", swaggerUI.serve);
+app.get("/", swaggerUI.setup(swaggerDocument));
 
 const meRouter = require("./routes/me");
 const volcanoRouter = require("./routes/volcano");
