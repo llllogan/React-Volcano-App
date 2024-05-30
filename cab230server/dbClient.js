@@ -178,7 +178,11 @@ class DbClient {
     }
 
     async updateUser(id, email, firstName, lastName, dob, address) {
-        await knex('users').where('id', id).update({email: email, firstName: firstName, lastName: lastName, dob: dob, address: address});
+        try {
+            await knex('users').where('id', id).update({email: email, firstName: firstName, lastName: lastName, dob: dob, address: address});
+        } catch (error) {
+            return error;
+        }
     }
 }
 

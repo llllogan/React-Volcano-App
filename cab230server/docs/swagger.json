@@ -14,77 +14,41 @@
       }
     },
     "schemas": {
-      "MissingCountryParameterVolcanoes": {
+      "VolcanoReview": {
         "type": "object",
         "properties": {
-          "error": {
-            "type": "boolean",
-            "example": "true"
+          "id": {
+            "type": "number",
+            "example": 1
           },
-          "message": {
+          "userId": {
+            "type": "number",
+            "example": 1
+          },
+          "title": {
             "type": "string",
-            "example": "Country is a required query parameter."
+            "example": "Great volcano!"
+          },
+          "rating": {
+            "type": "number",
+            "example": 5
+          },
+          "comment": {
+            "type": "string",
+            "example": "This volcano was fantastic to climb. Avoid the lava!"
+          },
+          "date": {
+            "type": "string",
+            "example": "2024-05-27T14:00:00.000Z"
           }
         }
       },
-      "InvalidParametersVolcanoes": {
+      "InvalidQueryParameters": {
         "type": "object",
         "properties": {
           "error": {
             "type": "boolean",
-            "example": "true"
-          },
-          "message": {
-            "type": "string",
-            "example": "Invalid query parameters. Only country and populatedWithin are permitted."
-          }
-        }
-      },
-      "PageNotFound": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "example": "true"
-          },
-          "message": {
-            "type": "string",
-            "example": "Page not found!"
-          }
-        }
-      },
-      "VolcanoIdNotFound": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "example": "true"
-          },
-          "message": {
-            "type": "string",
-            "example": "Volcano with ID: 99999 not found."
-          }
-        }
-      },
-      "InvalidPopulatedWithinParameterVolcanoes": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "example": "true"
-          },
-          "message": {
-            "type": "string",
-            "example": "Invalid value for populatedWithin. Only: 5km,10km,30km,100km are permitted."
-          }
-        }
-      },
-      "InvalidParametersVolcano": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "example": "true"
+            "example": true
           },
           "message": {
             "type": "string",
@@ -92,55 +56,307 @@
           }
         }
       },
-      "MissingAuthHeader": {
+      "SupplyOneQueryParameter": {
         "type": "object",
         "properties": {
           "error": {
             "type": "boolean",
-            "example": "true"
+            "example": true
           },
           "message": {
             "type": "string",
-            "example": "Authorization header ('Bearer token') not found"
+            "example": "Please supply only one query parameter with an option 'exactMatch' flag."
           }
         }
       },
-      "TokenExpired": {
+      "SupplyValidQueryParameter": {
         "type": "object",
         "properties": {
           "error": {
             "type": "boolean",
-            "example": "true"
+            "example": true
           },
           "message": {
             "type": "string",
-            "example": "JWT token has expired"
+            "example": "Please supply a valid query parameter (name, volcano, region, subregion)."
           }
         }
       },
-      "InvalidJWT": {
+      "RequestBodyIncompleteEmailPassword": {
         "type": "object",
         "properties": {
           "error": {
             "type": "boolean",
-            "example": "true"
+            "example": true
           },
           "message": {
             "type": "string",
-            "example": "Invalid JWT token"
+            "example": "Request body incomplete, both email and password are required."
           }
         }
       },
-      "MalformedAuthHeader": {
+      "RequestBodyIncompleteProfile": {
         "type": "object",
         "properties": {
           "error": {
             "type": "boolean",
-            "example": "true"
+            "example": true
           },
           "message": {
             "type": "string",
-            "example": "Authorization header is malformed"
+            "example": "Request body incomplete: firstName, lastName, dob and address are required."
+          }
+        }
+      },
+      "ReviewMissingRequiredFields": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Review is missing required fields."
+          }
+        }
+      },
+      "UserProfileUpdateFailure": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "An error occurred updating the user profile."
+          }
+        }
+      },
+      "SqlError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "SQL error. Please check payload."
+          }
+        }
+      },
+      "ReviewUpdatePayloadIncomplete": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Review update payload must have at least one field."
+          }
+        }
+      },
+      "CountryRequiredQueryParameter": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Country is a required query parameter."
+          }
+        }
+      },
+      "InvalidQueryParametersCountryPopulatedWithin": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Invalid query parameters. Only country and populatedWithin are permitted."
+          }
+        }
+      },
+      "InvalidValueForPopulatedWithin": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Invalid value for populatedWithin. Only: 5km, 10km, 30km, 100km are permitted."
+          }
+        }
+      },
+      "InvalidJwtToken": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Invalid JWT token."
+          }
+        }
+      },
+      "JwtTokenExpired": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "JWT token has expired."
+          }
+        }
+      },
+      "AuthorizationHeaderMalformed": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Authorization header is malformed."
+          }
+        }
+      },
+      "AuthorizationHeaderNotFound": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Authorization header ('Bearer token') not found."
+          }
+        }
+      },
+      "IncorrectEmailOrPassword": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Incorrect email or password."
+          }
+        }
+      },
+      "Forbidden": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Forbidden."
+          }
+        }
+      },
+      "UserNotFound": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "User not found."
+          }
+        }
+      },
+      "VolcanoNotFound": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Volcano with ID: 99 not found."
+          }
+        }
+      },
+      "ReviewNotFound": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Review with ID: 11 not found."
+          }
+        }
+      },
+      "ReviewDoesNotBelongToVolcano": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Review with ID: 11 does not belong to volcano with ID: 99."
+          }
+        }
+      },
+      "UserAlreadyExists": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "User already exists."
+          }
+        }
+      },
+      "TeapotError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "I cannot brew coffee as I am a teapot."
+          },
+          "link": {
+            "type": "string",
+            "example": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/418"
+          
           }
         }
       },
@@ -185,58 +401,6 @@
             "example": "123 Fake Street, Springfield"
           }
         }
-      },
-      "InvalidProfileBodyFormat": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "example": "true"
-          },
-          "message": {
-            "type": "string",
-            "example": "Request body incomplete: firstName, lastName, dob and address are required."
-          }
-        }
-      },
-      "InvalidFirstNameLastNameAddressFormat": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "example": "true"
-          },
-          "message": {
-            "type": "string",
-            "example": "Request body invalid: firstName, lastName and address must be strings only."
-          }
-        }
-      },
-      "InvalidProfileDateFormat": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "example": "true"
-          },
-          "message": {
-            "type": "string",
-            "example": "Invalid input: dob must be a real date in format YYYY-MM-DD."
-          }
-        }
-      },
-      "InvalidProfileDate": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "example": "true"
-          },
-          "message": {
-            "type": "string",
-            "example": "Invalid input: dob must be a date in the past."
-          }
-        }
       }
     }
   },
@@ -271,17 +435,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "boolean",
-                      "example": "true"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Invalid query parameters. Query parameters are not permitted."
-                    }
-                  }
+                  "$ref": "#/components/schemas/InvalidQueryParameters"
                 }
               }
             }
@@ -336,7 +490,17 @@
             "description": "A subset of the list of countries, filtered by the query parameter.",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "Algeria",
+                    "Antarctica",
+                    "Argentina"
+                  ]
+                }
               }
             }
           },
@@ -345,7 +509,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": []
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/SupplyOneQueryParameter"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SupplyValidQueryParameter"
+                    }
+                  ]
                 }
               }
             }
@@ -421,13 +592,13 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/MissingCountryParameterVolcanoes"
+                      "$ref": "#/components/schemas/CountryRequiredQueryParameter"
                     },
                     {
-                      "$ref": "#/components/schemas/InvalidParametersVolcanoes"
+                      "$ref": "#/components/schemas/InvalidQueryParametersCountryPopulatedWithin"
                     },
                     {
-                      "$ref": "#/components/schemas/InvalidPopulatedWithinParameterVolcanoes"
+                      "$ref": "#/components/schemas/InvalidValueForPopulatedWithin"
                     }
                   ]
                 }
@@ -531,11 +702,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/InvalidParametersVolcano"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/InvalidQueryParameters"
                 }
               }
             }
@@ -547,13 +714,13 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/InvalidJWT"
+                      "$ref": "#/components/schemas/InvalidJwtToken"
                     },
                     {
-                      "$ref": "#/components/schemas/TokenExpired"
+                      "$ref": "#/components/schemas/JwtTokenExpired"
                     },
                     {
-                      "$ref": "#/components/schemas/MalformedAuthHeader"
+                      "$ref": "#/components/schemas/AuthorizationHeaderMalformed"
                     }
                   ]
                 }
@@ -565,11 +732,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/VolcanoIdNotFound"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/VolcanoNotFound"
                 }
               }
             }
@@ -601,33 +764,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "userId": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "Great volcano!"
-                      },
-                      "rating": {
-                        "type": "number",
-                        "example": 5
-                      },
-                      "comment": {
-                        "type": "string",
-                        "example": "This volcano was fantastic to climb. Avoid the lava!"
-                      },
-                      "date": {
-                        "type": "string",
-                        "example": "2024-05-27T14:00:00.000Z"
-                      }
-                    }
+                    "$ref": "#/components/schemas/VolcanoReview"
                   }
                 }
               }
@@ -640,7 +777,7 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/VolcanoIdNotFound"
+                      "$ref": "#/components/schemas/VolcanoNotFound"
                     }
                   ]
                 }
@@ -700,13 +837,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Review created"
-                    }
-                  }
+                  "$ref": "#/components/schemas/VolcanoReview"
                 }
               }
             }
@@ -716,17 +847,44 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "boolean",
-                      "example": "true"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ReviewMissingRequiredFields"
                     },
-                    "message": {
-                      "type": "string",
-                      "example": "Request body incomplete, title, rating and comment are required"
+                    {
+                      "$ref": "#/components/schemas/SqlError"
                     }
-                  }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Click on 'Schema' below to see the possible error responses.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/InvalidJwtToken"
+                    },
+                    {
+                      "$ref": "#/components/schemas/JwtTokenExpired"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AuthorizationHeaderMalformed"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Volcano ID not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VolcanoNotFound"
                 }
               }
             }
@@ -786,13 +944,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Review updated"
-                    }
-                  }
+                  "$ref": "#/components/schemas/VolcanoReview"
                 }
               }
             }
@@ -802,17 +954,64 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "boolean",
-                      "example": "true"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ReviewUpdatePayloadIncomplete"
                     },
-                    "message": {
-                      "type": "string",
-                      "example": "Request body incomplete, title, rating and comment are required"
+                    {
+                      "$ref": "#/components/schemas/SqlError"
                     }
-                  }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Click on 'Schema' below to see the possible error responses.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/InvalidJwtToken"
+                    },
+                    {
+                      "$ref": "#/components/schemas/JwtTokenExpired"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AuthorizationHeaderMalformed"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AuthorizationHeaderNotFound"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Click on 'Schema' below to see the possible error responses.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Review ID not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ReviewNotFound"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ReviewDoesNotBelongToVolcano"
+                    }
+                  ]
                 }
               }
             }
@@ -1043,13 +1242,13 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/TokenExpired"
+                      "$ref": "#/components/schemas/JwtTokenExpired"
                     },
                     {
-                      "$ref": "#/components/schemas/InvalidJWT"
+                      "$ref": "#/components/schemas/InvalidJwtToken"
                     },
                     {
-                      "$ref": "#/components/schemas/MalformedAuthHeader"
+                      "$ref": "#/components/schemas/AuthorizationHeaderMalformed"
                     }
                   ]
                 }
@@ -1061,17 +1260,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "boolean",
-                      "example": "true"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "User not found"
-                    }
-                  }
+                  "$ref": "#/components/schemas/UserNotFound"
                 }
               }
             }
@@ -1144,16 +1333,10 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/InvalidProfileBodyFormat"
+                      "$ref": "#/components/schemas/RequestBodyIncompleteProfile"
                     },
                     {
-                      "$ref": "#/components/schemas/InvalidFirstNameLastNameAddressFormat"
-                    },
-                    {
-                      "$ref": "#/components/schemas/InvalidProfileDateFormat"
-                    },
-                    {
-                      "$ref": "#/components/schemas/InvalidProfileDate"
+                      "$ref": "#/components/schemas/UserProfileUpdateFailure"
                     }
                   ]
                 }
@@ -1167,16 +1350,16 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/MissingAuthHeader"
+                      "$ref": "#/components/schemas/AuthorizationHeaderNotFound"
                     },
                     {
-                      "$ref": "#/components/schemas/TokenExpired"
+                      "$ref": "#/components/schemas/JwtTokenExpired"
                     },
                     {
-                      "$ref": "#/components/schemas/InvalidJWT"
+                      "$ref": "#/components/schemas/InvalidJwtToken"
                     },
                     {
-                      "$ref": "#/components/schemas/MalformedAuthHeader"
+                      "$ref": "#/components/schemas/AuthorizationHeaderMalformed"
                     }
                   ]
                 }
@@ -1188,17 +1371,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "boolean",
-                      "example": "true"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Forbidden"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Forbidden"
                 }
               }
             }
@@ -1220,13 +1393,32 @@
                   "properties": {
                     "name": {
                       "type": "string",
-                      "example": "Mike Wazowski"
+                      "example": "Logan Janssen"
                     },
                     "student_number": {
                       "type": "string",
-                      "example": "n1234567"
+                      "example": "n10797831"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/brewcoffee": {
+      "get": {
+        "summary": "New!",
+        "tags": ["Coffee"],
+        "description": "A route to brew a cup of coffee.",
+        "responses": {
+          "418": {
+            "description": "I'm a teapot",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeapotError"
                 }
               }
             }

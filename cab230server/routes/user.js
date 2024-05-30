@@ -142,7 +142,12 @@ router.route("/:email/profile")
 
         const updatedInformation = req.getProfileInformation();
 
-        await req.db.updateUser(req.existingUser.id, req.existingUser.email, updatedInformation.firstName, updatedInformation.lastName, updatedInformation.dob, updatedInformation.address);
+        const error = await req.db.updateUser(req.existingUser.id, req.existingUser.email, updatedInformation.firstName, updatedInformation.lastName, updatedInformation.dob, updatedInformation.address);
+
+        if (error != null) {
+            res.sendError("An error occurred updating the user profile.");
+            return;
+        }
 
         const updatedUser = await req.db.getUserByEmail(req.existingUser.email);
         const payload = {
