@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var https = require('https');
+
+const fs = require('fs');
+const credentials = {
+  key: fs.readFileSync("selfsigned.key","utf8"),
+  cert: fs.readFileSync("selfsigned.crt","utf8")
+};
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = 3000;
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = https.createServer(credentials, app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+

@@ -8,8 +8,6 @@ const tokenMiddleware = require("./middleware/authMiddleware");
 const swaggerUI = require("swagger-ui-express");
 const swaggerDocument = require("./docs/swagger.json");
 
-require('dotenv').config();
-
 const app = express();
 app.use(bodyParser.json());
 app.use(dbClient);
@@ -38,6 +36,5 @@ app.get("/brewcoffee", (req, res) => {
     return;
 });
 
-
-app.listen(3000);
+module.exports = app;
 

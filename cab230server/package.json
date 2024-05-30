@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "devStart": "nodemon server.js"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "@babel/cli": "^7.24.6",

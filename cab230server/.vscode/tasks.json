@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [{
         "label": "run-in-nodemon",
-        "command": "npm run devStart",
+        "command": "npm start",
         "type": "shell"
     }]
 }
