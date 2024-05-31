@@ -98,6 +98,16 @@ router.route("/:email/profile")
             lastName: req.existingUser.lastName,
         }
 
+        if (!req.hasAuthHeader()) {
+            res.sendSuccess(profile);
+            return;
+        }
+
+        if (req.existingUser.id != req.bearerToken.id) {
+            res.sendSuccess(profile);
+            return;
+        }
+
         if (req.hasValidBearerToken()) {
             profile.address = req.existingUser.address;
             profile.dob = req.existingUser.dob;
@@ -130,14 +140,17 @@ router.route("/:email/profile")
 
         if (req.existingUser == null) {
             res.sendNotFound("User not found");
+            return;
         }
 
         if (req.existingUser.id != req.bearerToken.id) {
             res.sendForbidden("Forbidden");
+            return;
         }
 
         if (req.getProfileInformation() == null) {
             res.sendError("Request body incomplete: firstName, lastName, dob and address are required.");
+            return;
         }
 
         const updatedInformation = req.getProfileInformation();

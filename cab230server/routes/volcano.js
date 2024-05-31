@@ -4,6 +4,7 @@ const router = express.Router();
 router.param("id", async (req, res, next, id) => {
 
     let volcano = await req.db.getVolcanoById(id);
+    req.volcanoId = id;
     req.volcano = volcano;
     next();
 });
@@ -18,8 +19,8 @@ router.param("reviewId", async (req, res, next, reviewId) => {
 
 router.get("/:id", async (req, res) => {
 
-    if (!req.hasAuthHeader()) {
-        res.sendUnauthorised("Authorization header ('Bearer token') not found");
+    if (req.hasAuthHeader() && !req.authTypeIsBearer()) {
+        res.sendUnauthorised("Authorization header is malformed");
         return;
     }
 
@@ -33,18 +34,13 @@ router.get("/:id", async (req, res) => {
         return;
     }
 
-    if (req.hasAuthHeader() && !req.authTypeIsBearer()) {
-        res.sendUnauthorised("Authorization header is malformed");
-        return;
-    }
-
     if (req.getQueryParams() != null) {
         res.sendError("Invalid query parameters. Query parameters are not permitted.");
         return;
     }
 
     if (req.volcano == null) {
-        res.sendNotFound("Volcano with ID: " + id + " not found.");
+        res.sendNotFound("Volcano with ID: " + req.volcanoId + " not found.");
         return;
     }
 
@@ -91,6 +87,11 @@ router.route("/:id/reviews")
             return;
         }
 
+        if (req.hasAuthHeader() && !req.authTypeIsBearer()) {
+            res.sendUnauthorised("Authorization header is malformed");
+            return;
+        }
+
         if (req.authTypeIsBearer() && !req.hasValidBearerToken()) {
             res.sendUnauthorised("Invalid JWT token");
             return;
@@ -98,11 +99,6 @@ router.route("/:id/reviews")
     
         if (req.authTypeIsBearer() && req.bearerTokenHasExpired()) {
             res.sendUnauthorised("JWT token has expired");
-            return;
-        }
-    
-        if (req.hasAuthHeader() && !req.authTypeIsBearer()) {
-            res.sendUnauthorised("Authorization header is malformed");
             return;
         }
 
