@@ -12,6 +12,10 @@ router.get("/", async (req, res) => {
     }
 
     const data = await req.db.getCountriesList();
+
+    // Order the list alphabetically
+    data.sort();
+
     res.sendSuccess(data);
 });
 
@@ -64,6 +68,9 @@ router.get("/filter", async (req, res) => {
     }
 
     const data = await req.db.getCountriesByFilter(queryParamKey, queryParamValue, exactMatch);
+    // Order the list alphabetically
+    data.sort();
+    
     res.sendSuccess(data);
 });
 
